@@ -1,0 +1,38 @@
+@use "../breakpoints.scss" as breakpoints;
+
+.hover {
+    transition: var(--transition-micro-medium);
+
+    &:hover {
+        transform: translateX(var(--static-space-4));
+    }
+}
+
+@media (max-width: breakpoints.$s) {
+    .textAlign {
+        text-align: center;
+    }
+
+    .blockAlign {
+        align-self: center;
+    }
+}
+
+.techCard {
+    transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+    border: 1px solid var(--neutral-alpha-weak);
+    
+    &:hover {
+        transform: translateY(-2px);
+        border-color: var(--neutral-alpha-medium) !important;
+    }
+}
+
+.techChip {
+    transition: transform 0.2s ease, border-color 0.2s ease, background-color 0.2s ease !important;
+    
+    &:hover {
+        transform: translateY(-1px);
+        border-color: var(--neutral-on-background-weak) !important;
+    }
+}

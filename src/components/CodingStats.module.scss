@@ -1,0 +1,155 @@
+.statsContainer {
+  position: relative;
+  isolation: isolate;
+  width: 100%;
+  padding: 48px 0;
+  --bg-secondary: var(--neutral-alpha-weak);
+  --card: var(--surface-background);
+  --card-hover: var(--surface-background);
+  --border: var(--surface-border);
+  --border-hover: var(--neutral-border-strong);
+  --text-primary: var(--neutral-on-background-strong);
+  --text-secondary: var(--neutral-on-background-medium);
+  --text-muted: var(--neutral-on-background-weak);
+  --accent: var(--brand-on-background-weak);
+  --success: var(--success-on-background-medium);
+  --warning: var(--warning-on-background-medium);
+  --danger: var(--danger-on-background-medium);
+  --heatmap-level-0: var(--neutral-alpha-weak);
+  --heatmap-level-1: var(--brand-alpha-weak);
+  --heatmap-level-2: var(--brand-alpha-medium);
+  --heatmap-level-3: var(--brand-alpha-strong);
+  --heatmap-level-4: var(--brand-solid-medium);
+  --graph-line: var(--brand-solid-medium);
+  --graph-gradient-start: var(--brand-alpha-medium);
+  --graph-gradient-end: var(--static-transparent);
+  color: var(--text-primary);
+
+  &::before {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    inset: -8% -10%;
+    pointer-events: none;
+    background:
+      radial-gradient(ellipse 55% 42% at 18% 20%, var(--brand-alpha-weak), transparent 72%),
+      radial-gradient(ellipse 48% 38% at 84% 58%, var(--accent-alpha-weak), transparent 74%);
+    opacity: 0.55;
+    mask-image: linear-gradient(to bottom, transparent, black 16%, black 84%, transparent);
+  }
+}
+
+.dashboardColumn {
+  min-width: 0;
+}
+
+.glassCard {
+  position: relative;
+  z-index: 1;
+  background: var(--card);
+  backdrop-filter: var(--backdrop-filter);
+  -webkit-backdrop-filter: var(--backdrop-filter);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: var(--shadow-xs);
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    background 0.2s ease;
+  overflow: hidden;
+
+  &:hover {
+    border-color: var(--border-hover);
+    background: var(--card-hover);
+    box-shadow: var(--shadow-s);
+  }
+}
+
+// Large emphasis metrics
+.metricValue {
+  font-family: var(--font-heading), sans-serif;
+  font-size: 2.25rem;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  color: var(--text-primary);
+  line-height: 1;
+}
+
+// Secondary label styling
+.metricLabel {
+  font-size: 0.8125rem;
+  color: var(--text-muted);
+  font-weight: 500;
+  letter-spacing: 0.01em;
+}
+
+// Custom pill-shaped progress bars
+.progressBarContainer {
+  width: 100%;
+  height: 6px;
+  background: var(--bg-secondary);
+  border-radius: 9999px;
+  overflow: hidden;
+  position: relative;
+}
+
+.progressBarFill {
+  height: 100%;
+  border-radius: 9999px;
+  transition: width 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(90deg, rgba(255, 255, 255, 0.1) 0%, transparent 100%);
+  }
+}
+
+.platformBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease;
+  
+  &:hover {
+    background: var(--neutral-alpha-medium);
+    border-color: var(--neutral-border-strong);
+  }
+}
+
+// Sleek interactive chart tooltips (styled to match card backgrounds and border themes)
+.customTooltip {
+  position: absolute;
+  background: var(--card);
+  border: 1px solid var(--border-hover);
+  padding: 10px 14px;
+  border-radius: 8px;
+  pointer-events: none;
+  z-index: 100;
+  box-shadow: var(--shadow-m);
+  white-space: nowrap;
+  animation: tooltipFadeIn 0.15s ease-out;
+}
+
+@keyframes tooltipFadeIn {
+  from {
+    opacity: 0;
+    transform: translate(-50%, 4px);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+}

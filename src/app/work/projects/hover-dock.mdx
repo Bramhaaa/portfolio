@@ -1,0 +1,39 @@
+---
+title: "Hover Dock"
+publishedAt: "2026-06-06"
+summary: "A macOS utility that brings interactive window previews to apps in the Dock, mimicking the Windows taskbar preview experience."
+images:
+  - "/images/projects/hover-dock/ss1.png"
+  - "/images/projects/hover-dock/ss2.png"
+team:
+  - name: "Bramha Bajannavar"
+    role: "Developer"
+    avatar: "/images/avatar.jpg"
+    linkedIn: "https://www.linkedin.com/in/bramhabajannavar"
+link: "https://github.com/Bramhaaa/Hover-Dock"
+---
+
+## Overview
+
+For users transitioning from Windows to macOS, one of the most missed productivity features is the taskbar preview. On Windows, hovering over an app's taskbar icon displays thumbnails of all its open windows. 
+
+**Hover Dock** is a lightweight utility designed to bring this exact functionality to macOS. By hovering over any active application icon in the macOS Dock, users can instantly preview all of its open windows in a sleek overlay, streamlining window management and multitasking.
+
+## Key Features
+
+- **Instant Window Previews**: Hover over any Dock icon to trigger a visual overlay containing real-time thumbnails of all active windows associated with that app.
+- **Quick Actions**:
+  - **Click-to-Focus**: Select a thumbnail to instantly bring that specific window to the foreground.
+  - **Quick Close**: Dismiss windows directly from the preview window without having to focus them first.
+- **Native Integration**: Designed to feel like a native part of macOS, featuring smooth slide-in transitions, rounded glassmorphism cards, and dark/light mode compatibility.
+- **Lightweight Architecture**: Built to run efficiently in the background, utilizing macOS APIs with minimal resource consumption.
+
+## Technologies Used
+
+- **Swift / Objective-C**: For direct integration with macOS AppKit and CoreGraphics frameworks.
+- **macOS Accessibility APIs**: To track mouse positions, detect Dock interactions, and identify the focused applications.
+- **CoreGraphics (CGWindow)**: Used for capturing real-time screenshots and generating window thumbnail feeds efficiently.
+
+## Project Status
+
+Hover Dock is currently **in progress** and actively developed. You can view the code, report issues, or contribute to the project on the [Hover Dock GitHub repository](https://github.com/Bramhaaa/Hover-Dock).

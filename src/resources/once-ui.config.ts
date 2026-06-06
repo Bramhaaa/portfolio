@@ -98,27 +98,27 @@ const dataStyle: DataStyleConfig = {
 
 const effects: EffectsConfig = {
   mask: {
-    cursor: false,
+    cursor: true,
     x: 50,
     y: 0,
-    radius: 100,
+    radius: 75,
   },
   gradient: {
-    display: false,
-    opacity: 100,
+    display: true,
+    opacity: 50,
     x: 50,
-    y: 60,
-    width: 100,
-    height: 50,
+    y: 37.5,
+    width: 25,
+    height: 25,
     tilt: 0,
-    colorStart: "accent-background-strong",
-    colorEnd: "page-background",
+    colorStart: "brand-background-strong",
+    colorEnd: "static-transparent",
   },
   dots: {
     display: true,
-    opacity: 40,
+    opacity: 20,
     size: "2",
-    color: "brand-background-strong",
+    color: "brand-on-background-weak",
   },
   grid: {
     display: false,

@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 
 export const runtime = 'edge';
+export const dynamic = 'force-dynamic';
 
 function extractValue(svgText: string, id: string): number {
   const regex = new RegExp(`id="${id}"[^>]*>([^<]+)`);
@@ -50,7 +51,11 @@ export async function GET(request: Request) {
       stats.totalSolved = calculatedTotal;
     }
 
-    return NextResponse.json(stats);
+    return NextResponse.json(stats, {
+      headers: {
+        'Cache-Control': 'no-store, max-age=0, must-revalidate',
+      },
+    });
   } catch (error: any) {
     console.error('Error fetching GFG data:', error);
     return NextResponse.json({ 

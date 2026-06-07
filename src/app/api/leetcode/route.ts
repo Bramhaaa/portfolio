@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 
 export const runtime = 'edge';
+export const dynamic = 'force-dynamic';
 
 const query = `
   query leetcodeStats($username: String!) {
@@ -67,7 +68,11 @@ export async function GET(request: Request) {
       return NextResponse.json({ error: 'LeetCode API Error', details: data.errors }, { status: 500 });
     }
 
-    return NextResponse.json(data.data);
+    return NextResponse.json(data.data, {
+      headers: {
+        'Cache-Control': 'no-store, max-age=0, must-revalidate',
+      },
+    });
   } catch (error: any) {
     console.error('Error fetching Leetcode data:', error);
     return NextResponse.json({ 

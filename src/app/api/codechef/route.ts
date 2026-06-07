@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 
 export const runtime = 'edge';
+export const dynamic = 'force-dynamic';
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
@@ -47,7 +48,11 @@ export async function GET(request: Request) {
       }
     }
 
-    return NextResponse.json({ username, rating });
+    return NextResponse.json({ username, rating }, {
+      headers: {
+        'Cache-Control': 'no-store, max-age=0, must-revalidate',
+      },
+    });
   } catch (error: any) {
     console.error('Error fetching CodeChef rating:', error);
     return NextResponse.json({ 

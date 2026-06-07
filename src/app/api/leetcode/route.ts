@@ -56,7 +56,7 @@ export async function GET(request: Request) {
         query,
         variables: { username },
       }),
-      next: { revalidate: 3600 }, // Cache the result for an hour
+      cache: 'no-store',
     });
 
     if (!response.ok) {
@@ -70,7 +70,7 @@ export async function GET(request: Request) {
 
     return NextResponse.json(data.data, {
       headers: {
-        'Cache-Control': 'no-store, max-age=0, must-revalidate',
+        'Cache-Control': 'public, max-age=0, s-maxage=3600',
       },
     });
   } catch (error: any) {

@@ -26,7 +26,7 @@ export async function GET(request: Request) {
       headers: {
         'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
       },
-      next: { revalidate: 3600 }, // Cache GFG stats for 1 hour
+      cache: 'no-store',
     });
 
     if (!response.ok) {
@@ -53,7 +53,7 @@ export async function GET(request: Request) {
 
     return NextResponse.json(stats, {
       headers: {
-        'Cache-Control': 'no-store, max-age=0, must-revalidate',
+        'Cache-Control': 'public, max-age=0, s-maxage=3600',
       },
     });
   } catch (error: any) {

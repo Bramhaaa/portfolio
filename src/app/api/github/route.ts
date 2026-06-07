@@ -16,7 +16,7 @@ export async function GET(request: Request) {
       headers: {
         'Accept': 'application/json',
       },
-      next: { revalidate: 3600 }, // Cache contributions for 1 hour
+      cache: 'no-store',
     });
 
     if (!response.ok) {
@@ -26,7 +26,7 @@ export async function GET(request: Request) {
     const data = await response.json();
     return NextResponse.json(data, {
       headers: {
-        'Cache-Control': 'no-store, max-age=0, must-revalidate',
+        'Cache-Control': 'public, max-age=0, s-maxage=3600',
       },
     });
   } catch (error: any) {

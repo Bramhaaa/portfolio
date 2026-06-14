@@ -59,6 +59,8 @@ interface GitHubStats {
 }
 
 export function CodingStats() {
+  const displayGitHub = false; // Set to true to display the GitHub contributions calendar card
+
   const handles = person.handles || {
     github: "bramhaaa",
     leetcode: "general_BR",
@@ -136,9 +138,13 @@ export function CodingStats() {
     }
 
     fetchLeetCode();
-    fetchGitHub();
+    if (displayGitHub) {
+      fetchGitHub();
+    } else {
+      setGhLoading(false);
+    }
     fetchGFG();
-  }, [handles.leetcode, handles.github, handles.geeksforgeeks]);
+  }, [handles.leetcode, handles.github, handles.geeksforgeeks, displayGitHub]);
 
   // Extract LeetCode solved counts
   const getSolvedCount = (difficulty: string) => {
@@ -412,36 +418,38 @@ export function CodingStats() {
             {/* LEFT SECTION - Heatmap & Ranking Graph (65% width) */}
             <Column flex={7} gap="24" className={styles.dashboardColumn}>
               {/* GitHub Contributions Card */}
-              <div className={styles.glassCard}>
-                <Column gap="16">
-                  <Row horizontal="between" vertical="center" fillWidth>
-                    <Row gap="8" vertical="center">
-                      <Icon name="github" size="s" style={{ color: "var(--accent)" }} />
-                      <Text variant="heading-strong-m" style={{ color: "var(--text-primary)" }}>GitHub Contributions</Text>
+              {displayGitHub && (
+                <div className={styles.glassCard}>
+                  <Column gap="16">
+                    <Row horizontal="between" vertical="center" fillWidth>
+                      <Row gap="8" vertical="center">
+                        <Icon name="github" size="s" style={{ color: "var(--accent)" }} />
+                        <Text variant="heading-strong-m" style={{ color: "var(--text-primary)" }}>GitHub Contributions</Text>
+                      </Row>
+                      <Row gap="8" vertical="center">
+                        {!ghLoading && ghData && (
+                          <Text variant="body-default-xs" style={{ color: "var(--text-muted)" }}>
+                            {ghData.totalContributions.toLocaleString()} total
+                          </Text>
+                        )}
+                        <a href={`https://github.com/${handles.github}`} target="_blank" rel="noreferrer" className={styles.platformBadge}>
+                          <Tag size="s" style={{ background: "transparent", border: "none", color: "var(--text-secondary)", cursor: "pointer" }}>
+                            @{handles.github}
+                          </Tag>
+                        </a>
+                      </Row>
                     </Row>
-                    <Row gap="8" vertical="center">
-                      {!ghLoading && ghData && (
-                        <Text variant="body-default-xs" style={{ color: "var(--text-muted)" }}>
-                          {ghData.totalContributions.toLocaleString()} total
-                        </Text>
-                      )}
-                      <a href={`https://github.com/${handles.github}`} target="_blank" rel="noreferrer" className={styles.platformBadge}>
-                        <Tag size="s" style={{ background: "transparent", border: "none", color: "var(--text-secondary)", cursor: "pointer" }}>
-                          @{handles.github}
-                        </Tag>
-                      </a>
-                    </Row>
-                  </Row>
 
-                  {ghLoading ? (
-                    <Column fillWidth vertical="center" horizontal="center" height={130} className="animate-pulse">
-                      <div style={{ width: "90%", height: "90px", background: "var(--neutral-alpha-weak)", borderRadius: "6px" }} />
-                    </Column>
-                  ) : (
-                    renderGitHubHeatmap()
-                  )}
-                </Column>
-              </div>
+                    {ghLoading ? (
+                      <Column fillWidth vertical="center" horizontal="center" height={130} className="animate-pulse">
+                        <div style={{ width: "90%", height: "90px", background: "var(--neutral-alpha-weak)", borderRadius: "6px" }} />
+                      </Column>
+                    ) : (
+                      renderGitHubHeatmap()
+                    )}
+                  </Column>
+                </div>
+              )}
 
               {/* LeetCode Contest Ranking Card */}
               <div className={styles.glassCard}>

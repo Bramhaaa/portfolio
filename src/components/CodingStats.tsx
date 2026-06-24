@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { Column, Row, Text, Icon, RevealFx, Tag, Button, Heading } from "@once-ui-system/core";
 import { person } from "@/resources";
 import styles from "./CodingStats.module.scss";
@@ -59,7 +59,7 @@ interface GitHubStats {
 }
 
 export function CodingStats() {
-  const displayGitHub = false; // Set to true to display the GitHub contributions calendar card
+  const displayGitHub = true; // Set to true to display the GitHub contributions calendar card
 
   const handles = person.handles || {
     github: "bramhaaa",
@@ -73,6 +73,21 @@ export function CodingStats() {
   const [lcLoading, setLcLoading] = useState(true);
   const [gfgLoading, setGfgLoading] = useState(true);
   const [ghLoading, setGhLoading] = useState(true);
+
+  // Resize measurement for dynamic GitHub calendar weeks fit
+  const [containerWidth, setContainerWidth] = useState<number>(0);
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!containerRef.current) return;
+    const observer = new ResizeObserver((entries) => {
+      for (let entry of entries) {
+        setContainerWidth(entry.contentRect.width);
+      }
+    });
+    observer.observe(containerRef.current);
+    return () => observer.disconnect();
+  }, []);
 
   // Interaction States
   const [hoveredPoint, setHoveredPoint] = useState<{
@@ -319,11 +334,22 @@ export function CodingStats() {
       );
     }
 
-    const rectSize = 10;
-    const gap = 3.5; // Increased spacing between cells
-    const totalWeeks = ghData.contributions.length;
-    const svgWidth = totalWeeks * (rectSize + gap) + 10;
-    const svgHeight = 7 * (rectSize + gap) + 15;
+    const rectSize = 30;
+    const gap = 5; // Spacing between cells
+    const weekWidth = rectSize + gap; // 13.5 px per week column
+
+    // Calculate how many weeks can fit inside the container
+    const maxWeeks = ghData.contributions.length;
+    // containerWidth - 10px padding, divided by the width of a single week column
+    const fitWeeksCount = containerWidth > 0 
+      ? Math.min(maxWeeks, Math.floor((containerWidth - 10) / weekWidth))
+      : maxWeeks;
+
+    // Slice from the end to keep the most recent weeks on the right
+    const visibleWeeks = ghData.contributions.slice(-fitWeeksCount);
+
+    const svgWidth = visibleWeeks.length * weekWidth + 10;
+    const svgHeight = 7 * weekWidth + 15;
 
     // Map quartile level to refined blue scale
     const getLevelFill = (level: string) => {
@@ -342,14 +368,14 @@ export function CodingStats() {
     };
 
     return (
-      <div style={{ position: "relative", width: "100%" }}>
-        <div style={{ overflowX: "auto", width: "100%", paddingBottom: "4px" }}>
-          <svg viewBox={`0 0 ${svgWidth} ${svgHeight}`} width="100%" style={{ minWidth: "680px", overflow: "visible" }}>
+      <div ref={containerRef} style={{ position: "relative", width: "100%" }}>
+        <div style={{ width: "100%", paddingBottom: "4px" }}>
+          <svg viewBox={`0 0 ${svgWidth} ${svgHeight}`} width="100%" style={{ overflow: "visible" }}>
             <g>
-              {ghData.contributions.map((week, weekIndex) => (
-                <g key={weekIndex} transform={`translate(${weekIndex * (rectSize + gap)}, 0)`}>
+              {visibleWeeks.map((week, weekIndex) => (
+                <g key={weekIndex} transform={`translate(${weekIndex * weekWidth}, 0)`}>
                   {week.map((day, dayIndex) => {
-                    const rectY = dayIndex * (rectSize + gap);
+                    const rectY = dayIndex * weekWidth;
                     return (
                       <rect
                         key={day.date}
@@ -362,7 +388,7 @@ export function CodingStats() {
                         style={{ transition: "fill 0.2s cubic-bezier(0.16, 1, 0.3, 1)", cursor: "pointer" }}
                         onMouseEnter={(e) => {
                           setHoveredContrib({
-                            x: weekIndex * (rectSize + gap) + rectSize / 2,
+                            x: weekIndex * weekWidth + rectSize / 2,
                             y: rectY,
                             count: day.contributionCount,
                             date: new Date(day.date).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" }),

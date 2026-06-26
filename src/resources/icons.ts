@@ -42,6 +42,7 @@ import {
   SiDocker,
   SiGit,
   SiLinux,
+  SiGoogle,
 } from "react-icons/si";
 
 import {
@@ -128,6 +129,7 @@ export const iconLibrary: Record<string, IconType> = {
   awsiam: FaLock,
   git: SiGit,
   linux: SiLinux,
+  mlkit: SiGoogle,
 };
 
 export type IconLibrary = typeof iconLibrary;

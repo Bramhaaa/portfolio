@@ -1,0 +1,108 @@
+---
+title: "PaperMind Workspace"
+publishedAt: "2026-06-26"
+summary: "A local-first, privacy-first document intelligence workspace running offline on macOS with pgvector, FastAPI, Flutter, and Ollama."
+images:
+  - "/images/projects/papermind/dashboard.png"
+  - "/images/projects/papermind/reader.png"
+team:
+  - name: "Bramha Bajannavar"
+    role: "Developer"
+    avatar: "/images/avatar.jpeg"
+    linkedIn: "https://www.linkedin.com/in/bramhabajannavar"
+link: "https://github.com/bramhaaa/papermind"
+---
+
+## Overview
+
+In an era of cloud-dependent AI, privacy and data control have become paramount. **PaperMind** is a local-first, privacy-first document intelligence workspace designed to run completely offline. By combining a native macOS interface with a local FastAPI backend, PostgreSQL (with `pgvector`), and Ollama, PaperMind enables powerful document ingestion, semantic search, and generative responses without letting your sensitive data leave your machine.
+
+---
+
+## Key Features
+
+- **Local-First & Offline-First**: Your documents, vectors, and model weights remain entirely on your local machine.
+- **Semantic Document Ingestion**: Process and index text from documents, chunking and embedding them using locally hosted models.
+- **Hybrid Retrieval-Augmented Generation (RAG)**: Ask questions, search across your knowledge base, and receive context-rich answers powered by local LLMs (like `qwen2.5:0.5b`).
+- **Audio Transcriptions**: Import audio files and generate transcriptions locally using Whisper and FFmpeg.
+- **Secure Cloud Integration**: Optional integration with cloud LLMs (OpenAI, Anthropic, Gemini) with credentials protected using symmetric Fernet encryption before database storage.
+- **Developer-Friendly Workspace**: Offers both lightweight Docker-based deployment and a native macOS setup.
+
+---
+
+## Architecture & Technology Stack
+
+PaperMind is built with a modular, scalable architecture combining:
+
+- **Frontend**: **Flutter SDK** for compiling a high-performance, native macOS desktop application.
+- **Backend Server**: **FastAPI (Python 3.11+)** handling orchestrations, document processing pipelines, and Whisper transcriptions.
+- **Vector Database**: **PostgreSQL** with the **`pgvector`** extension for storing and executing high-dimensional vector similarity searches.
+- **Local LLM Runner**: **Ollama** running locally, serving lightweight models such as `qwen2.5:0.5b`.
+- **Media Utilities**: **FFmpeg** on macOS for audio processing and preparation before local Whisper ingestion.
+- **Symmetric Encryption**: **Fernet (Cryptography)** to securely seal external API keys stored in the database.
+- **Deployment**: **Docker Compose** for automated database, backend, and FFmpeg environment builds.
+
+---
+
+## Quick Start Guide
+
+### Option 1: Docker-based Setup (Recommended)
+
+Run the backend and database suite automatically:
+
+```bash
+# 1. Start Ollama and pull the model
+OLLAMA_HOST=0.0.0.0 OLLAMA_ORIGINS="*" ollama serve
+ollama pull qwen2.5:0.5b
+
+# 2. Build and run containers from the project root
+docker compose up --build
+
+# 3. Start the Desktop Client
+cd frontend
+flutter run -d macos
+```
+
+### Option 2: Native macOS Setup (Docker-less)
+
+For direct macOS execution:
+
+```bash
+# 1. Start Ollama
+OLLAMA_HOST=0.0.0.0 OLLAMA_ORIGINS="*" ollama serve
+
+# 2. Start PostgreSQL with pgvector (Homebrew)
+brew install postgresql@16 pgvector
+brew services start postgresql@16
+
+# 3. Initialize the database schema
+createdb -h localhost -U postgres papermind
+psql -h localhost -U postgres -d papermind -f init.sql
+
+# 4. Set up python virtual environment & run FastAPI
+cd backend
+python3 -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+
+export DATABASE_URL="postgresql://postgres:postgres@localhost:5432/papermind"
+export OLLAMA_BASE_URL="http://localhost:11434"
+export FERNET_KEY="gK-U6l9Q-30Vl_S17sZ0g7vS-a3fUfGZgK-U6l9Q-30="
+uvicorn main:app --reload
+
+# 5. Start Desktop Client
+cd frontend
+flutter run -d macos
+```
+
+---
+
+## Project Status & Security Best Practices
+
+PaperMind is active. When preparing for production:
+1. Always generate a unique cryptography key using:
+   ```bash
+   python3 -c "from cryptography.fernet import Fernet; print(Fernet.generate_key().decode())"
+   ```
+2. Restrict public exposure of your PostgreSQL ports and customize default access credentials.
+3. Protect environment files containing third-party API keys (like Serper/Tavily search keys).

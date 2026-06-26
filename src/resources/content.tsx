@@ -149,6 +149,17 @@ const about: About = {
     title: "Selected Projects",
     projects: [
       {
+        title: "PaperMind Workspace",
+        description: <>Flutter · FastAPI · pgvector · Ollama · Docker</>,
+        link: "https://github.com/bramhaaa/papermind",
+        achievements: [
+          <>Built a local-first, privacy-first document intelligence workspace running offline on macOS.</>,
+          <>Implemented hybrid Retrieval-Augmented Generation (RAG) using Ollama (Qwen2.5) and pgvector.</>,
+          <>Designed a secure multi-provider cloud API key storage with symmetric Fernet encryption.</>,
+          <>Integrated local Whisper and FFmpeg for offline audio transcription pipelines.</>,
+        ],
+      },
+      {
         title: "Hover Dock",
         description: <>Swift · AppKit · CoreGraphics · Accessibility APIs</>,
         link: "https://github.com/Bramhaaa/Hover-Dock",
@@ -243,7 +254,7 @@ const about: About = {
           { name: "OpenAI", icon: "openai" },
           { name: "RAG", icon: "rag" },
           { name: "Vector Databases", icon: "vectordb" },
-          { name: "TensorFlow Lite", icon: "tensorflow" },
+          { name: "ML Kit", icon: "mlkit" },
           { name: "OCR", icon: "ocr" },
           { name: "NLP", icon: "nlp" },
         ],

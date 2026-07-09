@@ -26,7 +26,8 @@ export const ResumeViewer: React.FC = () => {
           </Heading>
         </Row>
         <Text wrap="balance" variant="body-default-m" onBackground="neutral-weak" align="center">
-          Interested in my experience? View my resume directly on the page or download it to keep a copy.
+          Interested in my experience? View my resume directly on the page or download it to keep a
+          copy.
         </Text>
         <Row gap="12" wrap>
           <Button
@@ -50,23 +51,32 @@ export const ResumeViewer: React.FC = () => {
         </Row>
       </Column>
 
-      {isOpen && (
-        <Flex
-          fillWidth
-          radius="m"
-          overflow="hidden"
-          border="neutral-medium"
-          style={{ position: "relative", zIndex: 2, marginTop: "24px", height: "800px" }}
-        >
+      <Flex
+        fillWidth
+        radius="m"
+        overflow="hidden"
+        border={isOpen ? "neutral-medium" : undefined}
+        style={{
+          position: "relative",
+          zIndex: 2,
+          marginTop: isOpen ? "24px" : "0",
+          maxHeight: isOpen ? "1150px" : "0px",
+          opacity: isOpen ? 1 : 0,
+          transition:
+            "max-height 0.6s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease, margin-top 0.6s ease",
+          pointerEvents: isOpen ? "auto" : "none",
+        }}
+      >
+        {isOpen && (
           <iframe
-            src="/resume.pdf#toolbar=0"
+            src="/resume.pdf#toolbar=0&navpanes=0&scrollbar=0&view=FitH"
             width="100%"
-            height="100%"
+            height="1150px"
             style={{ border: "none" }}
             title="Resume Preview"
           />
-        </Flex>
-      )}
+        )}
+      </Flex>
     </Column>
   );
 };

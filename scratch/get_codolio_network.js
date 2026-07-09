@@ -1,29 +1,29 @@
-const { chromium } = require('playwright');
-const fs = require('fs');
-const path = require('path');
+const { chromium } = require("playwright");
+const fs = require("fs");
+const path = require("path");
 
 async function run() {
   const browser = await chromium.launch({ headless: true });
   const page = await browser.newPage();
-  
+
   const requests = [];
   const apiCalls = [];
 
-  page.on('request', request => {
+  page.on("request", (request) => {
     const url = request.url();
     requests.push(url);
-    if (url.includes('api') || url.includes('user') || url.includes('profile')) {
+    if (url.includes("api") || url.includes("user") || url.includes("profile")) {
       apiCalls.push({
         url: url,
         method: request.method(),
-        headers: request.headers()
+        headers: request.headers(),
       });
     }
   });
 
-  page.on('response', async response => {
+  page.on("response", async (response) => {
     const url = response.url();
-    if (url.includes('api.codolio.com') || url.includes('codolio.com/api')) {
+    if (url.includes("api.codolio.com") || url.includes("codolio.com/api")) {
       try {
         const text = await response.text();
         console.log(`\n--- API Response for ${url} ---`);
@@ -34,11 +34,11 @@ async function run() {
     }
   });
 
-  console.log('Navigating to Codolio profile page...');
-  await page.goto('https://codolio.com/profile/generalBR', { waitUntil: 'networkidle' });
-  
-  console.log('\n--- Intercepted API/Data Requests ---');
-  apiCalls.forEach(call => {
+  console.log("Navigating to Codolio profile page...");
+  await page.goto("https://codolio.com/profile/generalBR", { waitUntil: "networkidle" });
+
+  console.log("\n--- Intercepted API/Data Requests ---");
+  apiCalls.forEach((call) => {
     console.log(`[${call.method}] ${call.url}`);
   });
 

@@ -1,13 +1,6 @@
 "use client";
 
-import {
-  Carousel,
-  Column,
-  Flex,
-  Heading,
-  SmartLink,
-  Text,
-} from "@once-ui-system/core";
+import { Carousel, Column, Flex, Heading, SmartLink, Text } from "@once-ui-system/core";
 
 interface ProjectCardProps {
   href: string;

@@ -1,7 +1,7 @@
-import { NextResponse } from 'next/server';
+import { NextResponse } from "next/server";
 
-export const runtime = 'edge';
-export const dynamic = 'force-dynamic';
+export const runtime = "edge";
+export const dynamic = "force-dynamic";
 
 function extractValue(svgText: string, id: string): number {
   const regex = new RegExp(`id="${id}"[^>]*>([^<]+)`);
@@ -15,18 +15,19 @@ function extractValue(svgText: string, id: string): number {
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
-  const username = searchParams.get('username');
+  const username = searchParams.get("username");
 
   if (!username) {
-    return NextResponse.json({ error: 'Username query parameter is required' }, { status: 400 });
+    return NextResponse.json({ error: "Username query parameter is required" }, { status: 400 });
   }
 
   try {
     const response = await fetch(`https://gfgstatscard.vercel.app/${username}`, {
       headers: {
-        'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+        "User-Agent":
+          "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
       },
-      cache: 'no-store',
+      cache: "no-store",
     });
 
     if (!response.ok) {
@@ -36,13 +37,13 @@ export async function GET(request: Request) {
     const svgText = await response.text();
 
     const stats = {
-      school: extractValue(svgText, 'school-solved-count'),
-      basic: extractValue(svgText, 'basic-solved-count'),
-      easy: extractValue(svgText, 'easy-solved-count'),
-      medium: extractValue(svgText, 'medium-solved-count'),
-      hard: extractValue(svgText, 'hard-solved-count'),
-      score: extractValue(svgText, 'overall-score-count'),
-      totalSolved: extractValue(svgText, 'total-solved-count'),
+      school: extractValue(svgText, "school-solved-count"),
+      basic: extractValue(svgText, "basic-solved-count"),
+      easy: extractValue(svgText, "easy-solved-count"),
+      medium: extractValue(svgText, "medium-solved-count"),
+      hard: extractValue(svgText, "hard-solved-count"),
+      score: extractValue(svgText, "overall-score-count"),
+      totalSolved: extractValue(svgText, "total-solved-count"),
     };
 
     // Fallback if totalSolved is 0 but sum is not
@@ -53,14 +54,17 @@ export async function GET(request: Request) {
 
     return NextResponse.json(stats, {
       headers: {
-        'Cache-Control': 'public, max-age=0, s-maxage=3600',
+        "Cache-Control": "public, max-age=0, s-maxage=3600",
       },
     });
   } catch (error: any) {
-    console.error('Error fetching GFG data:', error);
-    return NextResponse.json({ 
-      error: 'Failed to fetch GFG data',
-      message: error instanceof Error ? error.message : String(error)
-    }, { status: 500 });
+    console.error("Error fetching GFG data:", error);
+    return NextResponse.json(
+      {
+        error: "Failed to fetch GFG data",
+        message: error instanceof Error ? error.message : String(error),
+      },
+      { status: 500 },
+    );
   }
 }

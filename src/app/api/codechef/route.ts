@@ -1,22 +1,23 @@
-import { NextResponse } from 'next/server';
+import { NextResponse } from "next/server";
 
-export const runtime = 'edge';
-export const dynamic = 'force-dynamic';
+export const runtime = "edge";
+export const dynamic = "force-dynamic";
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
-  const username = searchParams.get('username');
+  const username = searchParams.get("username");
 
   if (!username) {
-    return NextResponse.json({ error: 'Username query parameter is required' }, { status: 400 });
+    return NextResponse.json({ error: "Username query parameter is required" }, { status: 400 });
   }
 
   try {
     const response = await fetch(`https://www.codechef.com/users/${username}`, {
       headers: {
-        'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+        "User-Agent":
+          "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
       },
-      cache: 'no-store',
+      cache: "no-store",
     });
 
     if (!response.ok) {
@@ -28,7 +29,7 @@ export async function GET(request: Request) {
     // Parse the ratings history list from the page's scripts
     const match = html.match(/var\s+all_rating\s*=\s*(\[[^\]]+\]);/);
     let rating = 0;
-    
+
     if (match) {
       try {
         const ratingsArray = JSON.parse(match[1]);
@@ -42,22 +43,29 @@ export async function GET(request: Request) {
 
     // Fallback search in case scripts format changes
     if (rating === 0) {
-      const fallbackMatch = html.match(/Highest Rating\s*(\d+)/i) || html.match(/rating-number">([^<]+)/i);
+      const fallbackMatch =
+        html.match(/Highest Rating\s*(\d+)/i) || html.match(/rating-number">([^<]+)/i);
       if (fallbackMatch) {
         rating = parseInt(fallbackMatch[1].trim()) || 0;
       }
     }
 
-    return NextResponse.json({ username, rating }, {
-      headers: {
-        'Cache-Control': 'public, max-age=0, s-maxage=3600',
+    return NextResponse.json(
+      { username, rating },
+      {
+        headers: {
+          "Cache-Control": "public, max-age=0, s-maxage=3600",
+        },
       },
-    });
+    );
   } catch (error: any) {
-    console.error('Error fetching CodeChef rating:', error);
-    return NextResponse.json({ 
-      error: 'Failed to fetch CodeChef rating',
-      message: error instanceof Error ? error.message : String(error)
-    }, { status: 500 });
+    console.error("Error fetching CodeChef rating:", error);
+    return NextResponse.json(
+      {
+        error: "Failed to fetch CodeChef rating",
+        message: error instanceof Error ? error.message : String(error),
+      },
+      { status: 500 },
+    );
   }
 }

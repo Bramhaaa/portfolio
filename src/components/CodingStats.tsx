@@ -49,7 +49,12 @@ interface GfgStats {
 interface GitHubDay {
   color: string;
   contributionCount: number;
-  contributionLevel: "NONE" | "FIRST_QUARTILE" | "SECOND_QUARTILE" | "THIRD_QUARTILE" | "FOURTH_QUARTILE";
+  contributionLevel:
+    | "NONE"
+    | "FIRST_QUARTILE"
+    | "SECOND_QUARTILE"
+    | "THIRD_QUARTILE"
+    | "FOURTH_QUARTILE";
   date: string;
 }
 
@@ -165,7 +170,7 @@ export function CodingStats() {
   const getSolvedCount = (difficulty: string) => {
     if (!lcData?.matchedUser) return 0;
     const item = lcData.matchedUser.submitStats.acSubmissionNum.find(
-      (x) => x.difficulty.toLowerCase() === difficulty.toLowerCase()
+      (x) => x.difficulty.toLowerCase() === difficulty.toLowerCase(),
     );
     return item ? item.count : 0;
   };
@@ -173,7 +178,7 @@ export function CodingStats() {
   const getTotalCount = (difficulty: string) => {
     if (!lcData?.allQuestionsCount) return 1;
     const item = lcData.allQuestionsCount.find(
-      (x) => x.difficulty.toLowerCase() === difficulty.toLowerCase()
+      (x) => x.difficulty.toLowerCase() === difficulty.toLowerCase(),
     );
     return item ? item.count : 1;
   };
@@ -214,14 +219,19 @@ export function CodingStats() {
 
     const points = attendedContests.map((c, i) => {
       const x = padding + (i / (attendedContests.length - 1)) * (svgWidth - padding * 2);
-      const y = svgHeight - padding - ((c.rating - minRating) / ratingRange) * (svgHeight - padding * 2);
-      return { 
-        x, 
-        y, 
-        rating: Math.round(c.rating), 
+      const y =
+        svgHeight - padding - ((c.rating - minRating) / ratingRange) * (svgHeight - padding * 2);
+      return {
+        x,
+        y,
+        rating: Math.round(c.rating),
         ranking: c.ranking,
-        title: c.contest.title, 
-        date: new Date(c.contest.startTime * 1000).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" }) 
+        title: c.contest.title,
+        date: new Date(c.contest.startTime * 1000).toLocaleDateString("en-US", {
+          month: "short",
+          day: "numeric",
+          year: "numeric",
+        }),
       };
     });
 
@@ -236,45 +246,73 @@ export function CodingStats() {
 
     return (
       <div style={{ position: "relative", width: "100%", height: "180px" }}>
-        <svg viewBox={`0 0 ${svgWidth} ${svgHeight}`} width="100%" height="100%" style={{ overflow: "visible" }}>
+        <svg
+          viewBox={`0 0 ${svgWidth} ${svgHeight}`}
+          width="100%"
+          height="100%"
+          style={{ overflow: "visible" }}
+        >
           <defs>
             <linearGradient id="chartGrad" x1="0" y1="0" x2="0" y2="1">
               <stop offset="0%" stopColor="var(--graph-gradient-start)" />
               <stop offset="100%" stopColor="var(--graph-gradient-end)" />
             </linearGradient>
-            
           </defs>
 
           {/* Grid Lines */}
-          <line x1={padding} y1={padding} x2={svgWidth - padding} y2={padding} stroke="var(--border)" strokeWidth="0.75" strokeDasharray="3" />
-          <line x1={padding} y1={svgHeight / 2} x2={svgWidth - padding} y2={svgHeight / 2} stroke="var(--border)" strokeWidth="0.75" strokeDasharray="3" />
-          <line x1={padding} y1={svgHeight - padding} x2={svgWidth - padding} y2={svgHeight - padding} stroke="var(--border)" strokeWidth="0.75" strokeDasharray="3" />
+          <line
+            x1={padding}
+            y1={padding}
+            x2={svgWidth - padding}
+            y2={padding}
+            stroke="var(--border)"
+            strokeWidth="0.75"
+            strokeDasharray="3"
+          />
+          <line
+            x1={padding}
+            y1={svgHeight / 2}
+            x2={svgWidth - padding}
+            y2={svgHeight / 2}
+            stroke="var(--border)"
+            strokeWidth="0.75"
+            strokeDasharray="3"
+          />
+          <line
+            x1={padding}
+            y1={svgHeight - padding}
+            x2={svgWidth - padding}
+            y2={svgHeight - padding}
+            stroke="var(--border)"
+            strokeWidth="0.75"
+            strokeDasharray="3"
+          />
 
           {/* Area under the path */}
           <path d={areaPath} fill="url(#chartGrad)" style={{ transition: "all 0.5s ease" }} />
 
           {/* Guideline line on hover */}
           {hoveredPoint && (
-            <line 
-              x1={hoveredPoint.x} 
-              y1={padding} 
-              x2={hoveredPoint.x} 
-              y2={svgHeight - padding} 
-              stroke="var(--graph-line)" 
-              strokeWidth="1.5" 
-              strokeDasharray="4" 
+            <line
+              x1={hoveredPoint.x}
+              y1={padding}
+              x2={hoveredPoint.x}
+              y2={svgHeight - padding}
+              stroke="var(--graph-line)"
+              strokeWidth="1.5"
+              strokeDasharray="4"
               opacity="0.4"
             />
           )}
 
           {/* Ranking line */}
-          <path 
-            d={linePath} 
-            fill="none" 
-            stroke="var(--graph-line)" 
-            strokeWidth="3" 
-            strokeLinecap="round" 
-            strokeLinejoin="round" 
+          <path
+            d={linePath}
+            fill="none"
+            stroke="var(--graph-line)"
+            strokeWidth="3"
+            strokeLinecap="round"
+            strokeLinejoin="round"
             style={{ transition: "all 0.5s ease" }}
           />
 
@@ -288,7 +326,16 @@ export function CodingStats() {
               height={svgHeight}
               fill="transparent"
               style={{ cursor: "pointer" }}
-              onMouseEnter={() => setHoveredPoint({ x: p.x, y: p.y, rating: p.rating, ranking: p.ranking, contestTitle: p.title, date: p.date })}
+              onMouseEnter={() =>
+                setHoveredPoint({
+                  x: p.x,
+                  y: p.y,
+                  rating: p.rating,
+                  ranking: p.ranking,
+                  contestTitle: p.title,
+                  date: p.date,
+                })
+              }
               onMouseLeave={() => setHoveredPoint(null)}
             />
           ))}
@@ -306,13 +353,22 @@ export function CodingStats() {
             <Text variant="label-strong-s" style={{ color: "var(--accent)" }}>
               Rating: {hoveredPoint.rating}
             </Text>
-            <Text variant="body-default-xs" style={{ display: "block", marginTop: "2px", color: "var(--text-primary)" }}>
+            <Text
+              variant="body-default-xs"
+              style={{ display: "block", marginTop: "2px", color: "var(--text-primary)" }}
+            >
               {hoveredPoint.contestTitle}
             </Text>
-            <Text variant="body-default-xs" style={{ display: "block", color: "var(--text-secondary)" }}>
+            <Text
+              variant="body-default-xs"
+              style={{ display: "block", color: "var(--text-secondary)" }}
+            >
               Global Rank: #{hoveredPoint.ranking.toLocaleString()}
             </Text>
-            <Text variant="body-default-xs" style={{ fontSize: "10px", color: "var(--text-muted)" }}>
+            <Text
+              variant="body-default-xs"
+              style={{ fontSize: "10px", color: "var(--text-muted)" }}
+            >
               {hoveredPoint.date}
             </Text>
           </div>
@@ -341,9 +397,10 @@ export function CodingStats() {
     // Calculate how many weeks can fit inside the container
     const maxWeeks = ghData.contributions.length;
     // containerWidth - 10px padding, divided by the width of a single week column
-    const fitWeeksCount = containerWidth > 0 
-      ? Math.min(maxWeeks, Math.floor((containerWidth - 10) / weekWidth))
-      : maxWeeks;
+    const fitWeeksCount =
+      containerWidth > 0
+        ? Math.min(maxWeeks, Math.floor((containerWidth - 10) / weekWidth))
+        : maxWeeks;
 
     // Slice from the end to keep the most recent weeks on the right
     const visibleWeeks = ghData.contributions.slice(-fitWeeksCount);
@@ -370,7 +427,11 @@ export function CodingStats() {
     return (
       <div ref={containerRef} style={{ position: "relative", width: "100%" }}>
         <div style={{ width: "100%", paddingBottom: "4px" }}>
-          <svg viewBox={`0 0 ${svgWidth} ${svgHeight}`} width="100%" style={{ overflow: "visible" }}>
+          <svg
+            viewBox={`0 0 ${svgWidth} ${svgHeight}`}
+            width="100%"
+            style={{ overflow: "visible" }}
+          >
             <g>
               {visibleWeeks.map((week, weekIndex) => (
                 <g key={weekIndex} transform={`translate(${weekIndex * weekWidth}, 0)`}>
@@ -385,13 +446,20 @@ export function CodingStats() {
                         rx={2.5} // Rounded corners
                         ry={2.5}
                         fill={getLevelFill(day.contributionLevel)}
-                        style={{ transition: "fill 0.2s cubic-bezier(0.16, 1, 0.3, 1)", cursor: "pointer" }}
+                        style={{
+                          transition: "fill 0.2s cubic-bezier(0.16, 1, 0.3, 1)",
+                          cursor: "pointer",
+                        }}
                         onMouseEnter={(e) => {
                           setHoveredContrib({
                             x: weekIndex * weekWidth + rectSize / 2,
                             y: rectY,
                             count: day.contributionCount,
-                            date: new Date(day.date).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" }),
+                            date: new Date(day.date).toLocaleDateString("en-US", {
+                              month: "short",
+                              day: "numeric",
+                              year: "numeric",
+                            }),
                           });
                         }}
                         onMouseLeave={() => setHoveredContrib(null)}
@@ -416,7 +484,15 @@ export function CodingStats() {
             <Text variant="label-strong-xs" style={{ color: "var(--accent)" }}>
               {hoveredContrib.count} {hoveredContrib.count === 1 ? "contribution" : "contributions"}
             </Text>
-            <Text variant="body-default-xs" style={{ display: "block", fontSize: "9px", marginTop: "2px", color: "var(--text-primary)" }}>
+            <Text
+              variant="body-default-xs"
+              style={{
+                display: "block",
+                fontSize: "9px",
+                marginTop: "2px",
+                color: "var(--text-primary)",
+              }}
+            >
               {hoveredContrib.date}
             </Text>
           </div>
@@ -428,7 +504,13 @@ export function CodingStats() {
   return (
     <div className={styles.statsContainer}>
       <RevealFx translateY="12" delay={0.4} fillWidth>
-        <Column fillWidth gap="xl" paddingX="l" marginBottom="40" style={{ maxWidth: "80rem", margin: "0 auto" }}>
+        <Column
+          fillWidth
+          gap="xl"
+          paddingX="l"
+          marginBottom="40"
+          style={{ maxWidth: "80rem", margin: "0 auto" }}
+        >
           {/* Section Title */}
           <Column gap="4" align="center" fillWidth>
             <Heading as="h2" variant="display-strong-s">
@@ -450,7 +532,9 @@ export function CodingStats() {
                     <Row horizontal="between" vertical="center" fillWidth>
                       <Row gap="8" vertical="center">
                         <Icon name="github" size="s" style={{ color: "var(--accent)" }} />
-                        <Text variant="heading-strong-m" style={{ color: "var(--text-primary)" }}>GitHub Contributions</Text>
+                        <Text variant="heading-strong-m" style={{ color: "var(--text-primary)" }}>
+                          GitHub Contributions
+                        </Text>
                       </Row>
                       <Row gap="8" vertical="center">
                         {!ghLoading && ghData && (
@@ -458,8 +542,21 @@ export function CodingStats() {
                             {ghData.totalContributions.toLocaleString()} total
                           </Text>
                         )}
-                        <a href={`https://github.com/${handles.github}`} target="_blank" rel="noreferrer" className={styles.platformBadge}>
-                          <Tag size="s" style={{ background: "transparent", border: "none", color: "var(--text-secondary)", cursor: "pointer" }}>
+                        <a
+                          href={`https://github.com/${handles.github}`}
+                          target="_blank"
+                          rel="noreferrer"
+                          className={styles.platformBadge}
+                        >
+                          <Tag
+                            size="s"
+                            style={{
+                              background: "transparent",
+                              border: "none",
+                              color: "var(--text-secondary)",
+                              cursor: "pointer",
+                            }}
+                          >
                             @{handles.github}
                           </Tag>
                         </a>
@@ -467,8 +564,21 @@ export function CodingStats() {
                     </Row>
 
                     {ghLoading ? (
-                      <Column fillWidth vertical="center" horizontal="center" height={130} className="animate-pulse">
-                        <div style={{ width: "90%", height: "90px", background: "var(--neutral-alpha-weak)", borderRadius: "6px" }} />
+                      <Column
+                        fillWidth
+                        vertical="center"
+                        horizontal="center"
+                        height={130}
+                        className="animate-pulse"
+                      >
+                        <div
+                          style={{
+                            width: "90%",
+                            height: "90px",
+                            background: "var(--neutral-alpha-weak)",
+                            borderRadius: "6px",
+                          }}
+                        />
                       </Column>
                     ) : (
                       renderGitHubHeatmap()
@@ -483,18 +593,41 @@ export function CodingStats() {
                   <Row horizontal="between" vertical="center" fillWidth>
                     <Row gap="8" vertical="center">
                       <Icon name="leetcode" size="s" style={{ color: "var(--accent)" }} />
-                      <Text variant="heading-strong-m" style={{ color: "var(--text-primary)" }}>LeetCode Contest Ranking</Text>
+                      <Text variant="heading-strong-m" style={{ color: "var(--text-primary)" }}>
+                        LeetCode Contest Ranking
+                      </Text>
                     </Row>
                     {lcData?.userContestRanking && (
-                      <Tag size="s" style={{ background: "var(--bg-secondary)", border: "1px solid var(--border)", color: "var(--accent)", fontWeight: "600" }}>
+                      <Tag
+                        size="s"
+                        style={{
+                          background: "var(--bg-secondary)",
+                          border: "1px solid var(--border)",
+                          color: "var(--accent)",
+                          fontWeight: "600",
+                        }}
+                      >
                         Rating: {Math.round(lcData.userContestRanking.rating)}
                       </Tag>
                     )}
                   </Row>
 
                   {lcLoading ? (
-                    <Column fillWidth vertical="center" horizontal="center" height={180} className="animate-pulse">
-                      <div style={{ width: "80%", height: "120px", background: "var(--neutral-alpha-weak)", borderRadius: "6px" }} />
+                    <Column
+                      fillWidth
+                      vertical="center"
+                      horizontal="center"
+                      height={180}
+                      className="animate-pulse"
+                    >
+                      <div
+                        style={{
+                          width: "80%",
+                          height: "120px",
+                          background: "var(--neutral-alpha-weak)",
+                          borderRadius: "6px",
+                        }}
+                      />
                     </Column>
                   ) : (
                     renderContestGraph()
@@ -534,20 +667,71 @@ export function CodingStats() {
                   <Row horizontal="between" vertical="center" fillWidth>
                     <Row gap="8" vertical="center">
                       <Icon name="leetcode" size="s" style={{ color: "var(--accent)" }} />
-                      <Text variant="heading-strong-m" style={{ color: "var(--text-primary)" }}>LeetCode Solved</Text>
+                      <Text variant="heading-strong-m" style={{ color: "var(--text-primary)" }}>
+                        LeetCode Solved
+                      </Text>
                     </Row>
-                    <a href={`https://leetcode.com/u/${handles.leetcode}`} target="_blank" rel="noreferrer" className={styles.platformBadge}>
-                      <Tag size="s" style={{ background: "transparent", border: "none", color: "var(--text-secondary)", cursor: "pointer" }}>
+                    <a
+                      href={`https://leetcode.com/u/${handles.leetcode}`}
+                      target="_blank"
+                      rel="noreferrer"
+                      className={styles.platformBadge}
+                    >
+                      <Tag
+                        size="s"
+                        style={{
+                          background: "transparent",
+                          border: "none",
+                          color: "var(--text-secondary)",
+                          cursor: "pointer",
+                        }}
+                      >
                         @{handles.leetcode}
                       </Tag>
                     </a>
                   </Row>
 
                   {lcLoading ? (
-                    <Column gap="12" fillWidth className="animate-pulse">
-                      <div style={{ height: "24px", background: "var(--neutral-alpha-weak)", borderRadius: "4px" }} />
-                      <div style={{ height: "12px", background: "var(--neutral-alpha-weak)", borderRadius: "4px" }} />
-                      <div style={{ height: "12px", background: "var(--neutral-alpha-weak)", borderRadius: "4px" }} />
+                    <Column
+                      fillWidth
+                      vertical="center"
+                      horizontal="center"
+                      height={240}
+                      className="animate-pulse"
+                      gap="16"
+                    >
+                      <div
+                        style={{
+                          width: "100%",
+                          height: "24px",
+                          background: "var(--neutral-alpha-weak)",
+                          borderRadius: "4px",
+                        }}
+                      />
+                      <div
+                        style={{
+                          width: "100%",
+                          height: "16px",
+                          background: "var(--neutral-alpha-weak)",
+                          borderRadius: "4px",
+                        }}
+                      />
+                      <div
+                        style={{
+                          width: "100%",
+                          height: "16px",
+                          background: "var(--neutral-alpha-weak)",
+                          borderRadius: "4px",
+                        }}
+                      />
+                      <div
+                        style={{
+                          width: "100%",
+                          height: "16px",
+                          background: "var(--neutral-alpha-weak)",
+                          borderRadius: "4px",
+                        }}
+                      />
                     </Column>
                   ) : (
                     <Column gap="16" fillWidth>
@@ -556,16 +740,17 @@ export function CodingStats() {
                         <Row horizontal="between" vertical="end">
                           <Text className={styles.metricLabel}>Overall Progress</Text>
                           <Text variant="label-strong-s" style={{ color: "var(--text-primary)" }}>
-                            {totalSolved} <span style={{ color: "var(--text-muted)" }}>/ {totalQuestions}</span>
+                            {totalSolved}{" "}
+                            <span style={{ color: "var(--text-muted)" }}>/ {totalQuestions}</span>
                           </Text>
                         </Row>
                         <div className={styles.progressBarContainer}>
-                          <div 
-                            className={styles.progressBarFill} 
-                            style={{ 
+                          <div
+                            className={styles.progressBarFill}
+                            style={{
                               width: `${(totalSolved / totalQuestions) * 100}%`,
-                              background: "var(--accent)" 
-                            }} 
+                              background: "var(--accent)",
+                            }}
                           />
                         </div>
                       </Column>
@@ -573,18 +758,24 @@ export function CodingStats() {
                       {/* Easy Solved */}
                       <Column gap="4">
                         <Row horizontal="between">
-                          <Text variant="body-default-xs" style={{ color: "var(--success)", fontWeight: "600" }}>Easy</Text>
+                          <Text
+                            variant="body-default-xs"
+                            style={{ color: "var(--success)", fontWeight: "600" }}
+                          >
+                            Easy
+                          </Text>
                           <Text variant="label-strong-xs" style={{ color: "var(--text-primary)" }}>
-                            {easySolved} <span style={{ color: "var(--text-muted)" }}>/ {easyTotal}</span>
+                            {easySolved}{" "}
+                            <span style={{ color: "var(--text-muted)" }}>/ {easyTotal}</span>
                           </Text>
                         </Row>
                         <div className={styles.progressBarContainer}>
-                          <div 
-                            className={styles.progressBarFill} 
-                            style={{ 
+                          <div
+                            className={styles.progressBarFill}
+                            style={{
                               width: `${(easySolved / easyTotal) * 100}%`,
-                              background: "var(--success)" 
-                            }} 
+                              background: "var(--success)",
+                            }}
                           />
                         </div>
                       </Column>
@@ -592,18 +783,24 @@ export function CodingStats() {
                       {/* Medium Solved */}
                       <Column gap="4">
                         <Row horizontal="between">
-                          <Text variant="body-default-xs" style={{ color: "var(--warning)", fontWeight: "600" }}>Medium</Text>
+                          <Text
+                            variant="body-default-xs"
+                            style={{ color: "var(--warning)", fontWeight: "600" }}
+                          >
+                            Medium
+                          </Text>
                           <Text variant="label-strong-xs" style={{ color: "var(--text-primary)" }}>
-                            {mediumSolved} <span style={{ color: "var(--text-muted)" }}>/ {mediumTotal}</span>
+                            {mediumSolved}{" "}
+                            <span style={{ color: "var(--text-muted)" }}>/ {mediumTotal}</span>
                           </Text>
                         </Row>
                         <div className={styles.progressBarContainer}>
-                          <div 
-                            className={styles.progressBarFill} 
-                            style={{ 
+                          <div
+                            className={styles.progressBarFill}
+                            style={{
                               width: `${(mediumSolved / mediumTotal) * 100}%`,
-                              background: "var(--warning)" 
-                            }} 
+                              background: "var(--warning)",
+                            }}
                           />
                         </div>
                       </Column>
@@ -611,18 +808,24 @@ export function CodingStats() {
                       {/* Hard Solved */}
                       <Column gap="4">
                         <Row horizontal="between">
-                          <Text variant="body-default-xs" style={{ color: "var(--danger)", fontWeight: "600" }}>Hard</Text>
+                          <Text
+                            variant="body-default-xs"
+                            style={{ color: "var(--danger)", fontWeight: "600" }}
+                          >
+                            Hard
+                          </Text>
                           <Text variant="label-strong-xs" style={{ color: "var(--text-primary)" }}>
-                            {hardSolved} <span style={{ color: "var(--text-muted)" }}>/ {hardTotal}</span>
+                            {hardSolved}{" "}
+                            <span style={{ color: "var(--text-muted)" }}>/ {hardTotal}</span>
                           </Text>
                         </Row>
                         <div className={styles.progressBarContainer}>
-                          <div 
-                            className={styles.progressBarFill} 
-                            style={{ 
+                          <div
+                            className={styles.progressBarFill}
+                            style={{
                               width: `${(hardSolved / hardTotal) * 100}%`,
-                              background: "var(--danger)" 
-                            }} 
+                              background: "var(--danger)",
+                            }}
                           />
                         </div>
                       </Column>
@@ -637,20 +840,71 @@ export function CodingStats() {
                   <Row horizontal="between" vertical="center" fillWidth>
                     <Row gap="8" vertical="center">
                       <Icon name="geeksforgeeks" size="s" style={{ color: "var(--accent)" }} />
-                      <Text variant="heading-strong-m" style={{ color: "var(--text-primary)" }}>GFG Solved</Text>
+                      <Text variant="heading-strong-m" style={{ color: "var(--text-primary)" }}>
+                        GFG Solved
+                      </Text>
                     </Row>
-                    <a href={`https://www.geeksforgeeks.org/profile/${handles.geeksforgeeks}`} target="_blank" rel="noreferrer" className={styles.platformBadge}>
-                      <Tag size="s" style={{ background: "transparent", border: "none", color: "var(--text-secondary)", cursor: "pointer" }}>
+                    <a
+                      href={`https://www.geeksforgeeks.org/profile/${handles.geeksforgeeks}`}
+                      target="_blank"
+                      rel="noreferrer"
+                      className={styles.platformBadge}
+                    >
+                      <Tag
+                        size="s"
+                        style={{
+                          background: "transparent",
+                          border: "none",
+                          color: "var(--text-secondary)",
+                          cursor: "pointer",
+                        }}
+                      >
                         @{handles.geeksforgeeks}
                       </Tag>
                     </a>
                   </Row>
 
                   {gfgLoading ? (
-                    <Column gap="12" fillWidth className="animate-pulse">
-                      <div style={{ height: "24px", background: "var(--neutral-alpha-weak)", borderRadius: "4px" }} />
-                      <div style={{ height: "12px", background: "var(--neutral-alpha-weak)", borderRadius: "4px" }} />
-                      <div style={{ height: "12px", background: "var(--neutral-alpha-weak)", borderRadius: "4px" }} />
+                    <Column
+                      fillWidth
+                      vertical="center"
+                      horizontal="center"
+                      height={240}
+                      className="animate-pulse"
+                      gap="16"
+                    >
+                      <div
+                        style={{
+                          width: "100%",
+                          height: "24px",
+                          background: "var(--neutral-alpha-weak)",
+                          borderRadius: "4px",
+                        }}
+                      />
+                      <div
+                        style={{
+                          width: "100%",
+                          height: "16px",
+                          background: "var(--neutral-alpha-weak)",
+                          borderRadius: "4px",
+                        }}
+                      />
+                      <div
+                        style={{
+                          width: "100%",
+                          height: "16px",
+                          background: "var(--neutral-alpha-weak)",
+                          borderRadius: "4px",
+                        }}
+                      />
+                      <div
+                        style={{
+                          width: "100%",
+                          height: "16px",
+                          background: "var(--neutral-alpha-weak)",
+                          borderRadius: "4px",
+                        }}
+                      />
                     </Column>
                   ) : (
                     <Column gap="16" fillWidth>
@@ -659,16 +913,17 @@ export function CodingStats() {
                         <Row horizontal="between" vertical="end">
                           <Text className={styles.metricLabel}>Overall Progress</Text>
                           <Text variant="label-strong-s" style={{ color: "var(--text-primary)" }}>
-                            {gfgData?.totalSolved || 0} <span style={{ color: "var(--text-muted)" }}>problems</span>
+                            {gfgData?.totalSolved || 0}{" "}
+                            <span style={{ color: "var(--text-muted)" }}>problems</span>
                           </Text>
                         </Row>
                         <div className={styles.progressBarContainer}>
-                          <div 
-                            className={styles.progressBarFill} 
-                            style={{ 
+                          <div
+                            className={styles.progressBarFill}
+                            style={{
                               width: "100%",
-                              background: "var(--accent)" 
-                            }} 
+                              background: "var(--accent)",
+                            }}
                           />
                         </div>
                       </Column>
@@ -676,18 +931,23 @@ export function CodingStats() {
                       {/* GFG Easy (School + Basic + Easy) */}
                       <Column gap="4">
                         <Row horizontal="between">
-                          <Text variant="body-default-xs" style={{ color: "var(--success)", fontWeight: "600" }}>Easy (School / Basic / Easy)</Text>
+                          <Text
+                            variant="body-default-xs"
+                            style={{ color: "var(--success)", fontWeight: "600" }}
+                          >
+                            Easy (School / Basic / Easy)
+                          </Text>
                           <Text variant="label-strong-xs" style={{ color: "var(--text-primary)" }}>
                             {(gfgData?.school || 0) + (gfgData?.basic || 0) + (gfgData?.easy || 0)}
                           </Text>
                         </Row>
                         <div className={styles.progressBarContainer}>
-                          <div 
-                            className={styles.progressBarFill} 
-                            style={{ 
-                              width: `${gfgData?.totalSolved ? ((((gfgData.school || 0) + (gfgData.basic || 0) + (gfgData.easy || 0)) / gfgData.totalSolved) * 100) : 0}%`,
-                              background: "var(--success)" 
-                            }} 
+                          <div
+                            className={styles.progressBarFill}
+                            style={{
+                              width: `${gfgData?.totalSolved ? (((gfgData.school || 0) + (gfgData.basic || 0) + (gfgData.easy || 0)) / gfgData.totalSolved) * 100 : 0}%`,
+                              background: "var(--success)",
+                            }}
                           />
                         </div>
                       </Column>
@@ -695,18 +955,23 @@ export function CodingStats() {
                       {/* GFG Medium */}
                       <Column gap="4">
                         <Row horizontal="between">
-                          <Text variant="body-default-xs" style={{ color: "var(--warning)", fontWeight: "600" }}>Medium</Text>
+                          <Text
+                            variant="body-default-xs"
+                            style={{ color: "var(--warning)", fontWeight: "600" }}
+                          >
+                            Medium
+                          </Text>
                           <Text variant="label-strong-xs" style={{ color: "var(--text-primary)" }}>
                             {gfgData?.medium || 0}
                           </Text>
                         </Row>
                         <div className={styles.progressBarContainer}>
-                          <div 
-                            className={styles.progressBarFill} 
-                            style={{ 
-                              width: `${gfgData?.totalSolved ? (((gfgData.medium || 0) / gfgData.totalSolved) * 100) : 0}%`,
-                              background: "var(--warning)" 
-                            }} 
+                          <div
+                            className={styles.progressBarFill}
+                            style={{
+                              width: `${gfgData?.totalSolved ? ((gfgData.medium || 0) / gfgData.totalSolved) * 100 : 0}%`,
+                              background: "var(--warning)",
+                            }}
                           />
                         </div>
                       </Column>
@@ -714,18 +979,23 @@ export function CodingStats() {
                       {/* GFG Hard */}
                       <Column gap="4">
                         <Row horizontal="between">
-                          <Text variant="body-default-xs" style={{ color: "var(--danger)", fontWeight: "600" }}>Hard</Text>
+                          <Text
+                            variant="body-default-xs"
+                            style={{ color: "var(--danger)", fontWeight: "600" }}
+                          >
+                            Hard
+                          </Text>
                           <Text variant="label-strong-xs" style={{ color: "var(--text-primary)" }}>
                             {gfgData?.hard || 0}
                           </Text>
                         </Row>
                         <div className={styles.progressBarContainer}>
-                          <div 
-                            className={styles.progressBarFill} 
-                            style={{ 
-                              width: `${gfgData?.totalSolved ? (((gfgData.hard || 0) / gfgData.totalSolved) * 100) : 0}%`,
-                              background: "var(--danger)" 
-                            }} 
+                          <div
+                            className={styles.progressBarFill}
+                            style={{
+                              width: `${gfgData?.totalSolved ? ((gfgData.hard || 0) / gfgData.totalSolved) * 100 : 0}%`,
+                              background: "var(--danger)",
+                            }}
                           />
                         </div>
                       </Column>
@@ -737,18 +1007,28 @@ export function CodingStats() {
               {/* Other Coding Profiles */}
               <Column gap="12" fillWidth>
                 {/* Codolio Aggregator Card */}
-                <a 
-                  href="https://codolio.com/profile/generalBR" 
-                  target="_blank" 
-                  rel="noreferrer" 
+                <a
+                  href="https://codolio.com/profile/generalBR"
+                  target="_blank"
+                  rel="noreferrer"
                   className={styles.platformBadge}
-                  style={{ display: "flex", width: "100%", justifyContent: "space-between", textDecoration: "none", alignItems: "center" }}
+                  style={{
+                    display: "flex",
+                    width: "100%",
+                    justifyContent: "space-between",
+                    textDecoration: "none",
+                    alignItems: "center",
+                  }}
                 >
                   <Row gap="8" vertical="center">
                     <Icon name="openLink" size="s" style={{ color: "var(--accent)" }} />
                     <Column>
-                      <Text variant="label-strong-m" style={{ color: "var(--text-primary)" }}>Codolio Portfolio</Text>
-                      <Text variant="body-default-xs" style={{ color: "var(--text-muted)" }}>All-in-one developer track</Text>
+                      <Text variant="label-strong-m" style={{ color: "var(--text-primary)" }}>
+                        Codolio Portfolio
+                      </Text>
+                      <Text variant="body-default-xs" style={{ color: "var(--text-muted)" }}>
+                        All-in-one developer track
+                      </Text>
                     </Column>
                   </Row>
                   <Icon name="arrowUpRight" size="s" style={{ color: "var(--text-muted)" }} />

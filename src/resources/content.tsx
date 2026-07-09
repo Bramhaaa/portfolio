@@ -76,8 +76,9 @@ const home: Home = {
   },
   subline: (
     <>
-    I'm Bramha, a developer focused on AI, mobile apps, and backend systems. When I'm not building products, I'm usually solving problems or learning something new.
-</>
+      I'm Bramha, a developer focused on AI, mobile apps, and backend systems. When I'm not building
+      products, I'm usually solving problems or learning something new.
+    </>
   ),
 };
 
@@ -98,7 +99,9 @@ const about: About = {
     title: "Summary",
     description: (
       <>
-        Computer Science student building mobile applications, backend systems, and AI-powered products. Experienced with Flutter, FastAPI, real-time systems, and LLM integrations, with a focus on creating practical, scalable software.
+        Computer Science student building mobile applications, backend systems, and AI-powered
+        products. Experienced with Flutter, FastAPI, real-time systems, and LLM integrations, with a
+        focus on creating practical, scalable software.
       </>
     ),
   },
@@ -115,12 +118,8 @@ const about: About = {
             Implemented DFA-based text normalization for multi-locale systems, including numbers,
             currency, dates, and time.
           </>,
-          <>
-            Formalized deterministic parsing logic to reduce ambiguity in rule processing.
-          </>,
-          <>
-            Contributed through structured technical reviews and milestone evaluations.
-          </>,
+          <>Formalized deterministic parsing logic to reduce ambiguity in rule processing.</>,
+          <>Contributed through structured technical reviews and milestone evaluations.</>,
         ],
       },
       {
@@ -129,8 +128,8 @@ const about: About = {
         role: "AI App Developer Intern · Bengaluru (Remote)",
         achievements: [
           <>
-            Integrated LLM-based features, including chatbots and natural-language query
-            interfaces, using modern APIs and prompt pipelines.
+            Integrated LLM-based features, including chatbots and natural-language query interfaces,
+            using modern APIs and prompt pipelines.
           </>,
           <>
             Built and optimized Retrieval-Augmented Generation pipelines with vector databases for
@@ -153,9 +152,17 @@ const about: About = {
         description: <>Flutter · FastAPI · pgvector · Ollama · Docker</>,
         link: "https://github.com/bramhaaa/papermind",
         achievements: [
-          <>Built a local-first, privacy-first document intelligence workspace running offline on macOS.</>,
-          <>Implemented hybrid Retrieval-Augmented Generation (RAG) using Ollama (Qwen2.5) and pgvector.</>,
-          <>Designed a secure multi-provider cloud API key storage with symmetric Fernet encryption.</>,
+          <>
+            Built a local-first, privacy-first document intelligence workspace running offline on
+            macOS.
+          </>,
+          <>
+            Implemented hybrid Retrieval-Augmented Generation (RAG) using Ollama (Qwen2.5) and
+            pgvector.
+          </>,
+          <>
+            Designed a secure multi-provider cloud API key storage with symmetric Fernet encryption.
+          </>,
           <>Integrated local Whisper and FFmpeg for offline audio transcription pipelines.</>,
         ],
       },
@@ -164,8 +171,13 @@ const about: About = {
         description: <>Swift · AppKit · CoreGraphics · Accessibility APIs</>,
         link: "https://github.com/Bramhaaa/Hover-Dock",
         achievements: [
-          <>Developed a native macOS utility bringing interactive window previews to the macOS Dock.</>,
-          <>Integrated Accessibility APIs and CoreGraphics to track dock icons and render real-time window thumbnails.</>,
+          <>
+            Developed a native macOS utility bringing interactive window previews to the macOS Dock.
+          </>,
+          <>
+            Integrated Accessibility APIs and CoreGraphics to track dock icons and render real-time
+            window thumbnails.
+          </>,
           <>Designed a lightweight, system-optimized background process with smooth animations.</>,
         ],
       },
@@ -207,11 +219,7 @@ const about: About = {
     institutions: [
       {
         name: "BMS College of Engineering",
-        description: (
-          <>
-            B.E. in Computer Science and Engineering · Aug 2023 - Jul 2027
-          </>
-        ),
+        description: <>B.E. in Computer Science and Engineering · Aug 2023 - Jul 2027</>,
       },
     ],
   },

@@ -1,21 +1,144 @@
-@use "./breakpoints.scss" as breakpoints;
-
-.mask {
-    pointer-events: none;
-    backdrop-filter: blur(0.5rem);
-    background: linear-gradient(to bottom, var(--page-background), var(--static-transparent));
-    mask-image: linear-gradient(rgba(0,0,0) 25%, rgba(0, 0, 0, 0) 100%);
-    mask-size: 100% 100%;
+.topBar {
+  position: sticky;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 100;
+  background: rgba(13, 13, 13, 0.92);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 2px solid var(--ds-border);
 }
 
-@media (max-width: breakpoints.$s) {
-    .position {
-        top: auto;
-        bottom: var(--static-space-24);
-    }
+.inner {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 14px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
 
-    .mask {
-        transform: rotate(180deg);
-        bottom: 0;
-    }
+.leftGroup {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.logoSquare {
+  width: 34px;
+  height: 34px;
+  background: var(--ds-accent);
+  color: #0c0c0c;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-condensed), sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  border-radius: 0px;
+  border: 2px solid #ffffff;
+  box-shadow: 3px 3px 0px #ffffff;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.leftGroup:hover .logoSquare {
+  transform: translate(-1px, -1px);
+  box-shadow: 4px 4px 0px #ffffff;
+}
+
+.brandName {
+  font-family: var(--font-body), sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--ds-ink);
+  letter-spacing: -0.01em;
+}
+
+.rightGroup {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+
+  @media (max-width: 768px) {
+    gap: 14px;
+  }
+}
+
+.navLinks {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+
+  @media (max-width: 600px) {
+    gap: 14px;
+  }
+}
+
+.navLink {
+  font-family: var(--font-body), sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ds-ink-2);
+  text-decoration: none;
+  padding-bottom: 2px;
+  border-bottom: 2px solid transparent;
+  transition: color 0.15s ease, border-color 0.15s ease;
+
+  &:hover {
+    color: #ffffff;
+    border-bottom-color: var(--ds-accent);
+  }
+}
+
+.activeLink {
+  color: #ffffff !important;
+  border-bottom-color: var(--ds-accent) !important;
+}
+
+.statusBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 12px;
+  border: 2px solid var(--ds-border-strong);
+  border-radius: 0px;
+  font-family: var(--font-body), sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--ds-ink);
+  background: #141414;
+  box-shadow: 3px 3px 0px #000000;
+  white-space: nowrap;
+  text-decoration: none;
+  transition: border-color 0.15s ease, transform 0.15s ease, box-shadow 0.15s ease;
+
+  &:hover {
+    border-color: var(--ds-accent);
+    transform: translate(-1px, -1px);
+    box-shadow: 3px 3px 0px var(--ds-accent);
+  }
+
+  @media (max-width: 680px) {
+    display: none;
+  }
+}
+
+.greenDot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--ds-live);
+  box-shadow: 0 0 6px var(--ds-live);
+  animation: pulseDot 2s infinite ease-in-out;
+}
+
+@keyframes pulseDot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.45; transform: scale(0.85); }
 }

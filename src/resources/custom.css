@@ -1,69 +1,136 @@
-/* :root {
-  /*
-  /* Override default variables here */
-/*
-  --font-size-display-multiplier:   1;
-  --font-size-heading-multiplier:   1;
-  --font-size-body-multiplier:      1;
-  --font-size-label-multiplier:     1;
+/* ===================================================
+   Design System Tokens — Bramha Bajannavar Portfolio
+   Neo-Brutalist × Into the Spider-Verse System (Phase 3)
+   Accent: Electric Cyan (#00D4FF)
+   =================================================== */
 
-  --line-height-display-multiplier: 1;
-  --line-height-heading-multiplier: 1;
-  --line-height-body-multiplier:    1;
-  --line-height-label-multiplier:   1;
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700;800&display=swap');
 
-  --default-border:        var(--neutral-border-medium);
+:root {
+  /* ── Typography ─────────────────────────── */
+  --font-condensed: 'Bebas Neue', sans-serif;
+  --font-display:   'Bebas Neue', sans-serif;
+  --font-body:      'Geist', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
 
-  /*
-  /* Example setup for custom colors */
-/* Generate at: https://once-ui.com/customize */
-/*
-  --scheme-brand-100: #08002f;
-  --scheme-brand-200:  #04025c;
-  --scheme-brand-300:  #1f398e;
-  --scheme-brand-400:  #3856ae;
-  --scheme-brand-500:  #5071cc;
-  --scheme-brand-600:  #6f94f1;
-  --scheme-brand-700:  #8db3ff;
-  --scheme-brand-800:  #b2dbff;
-  --scheme-brand-900:  #bfe8ff;
-  --scheme-brand-1000: #ccf6ff;
-  --scheme-brand-1100: #d2fcff;
-  --scheme-brand-1200: #d2fcff;
-  --scheme-brand-600-10: rgba(111,148,241,0.1);
-  --scheme-brand-600-30: rgba(111,148,241,0.3);
-  --scheme-brand-600-50: rgba(111,148,241,0.5);
+  /* ── Color Palette ──────────────────────── */
+  --ds-bg:           #0c0c0c;
+  --ds-surface:      #121212;
+  --ds-surface-2:    #181818;
+  --ds-border:       #242424;
+  --ds-border-strong:#363636;
+  --ds-border-hover: #00D4FF;
+  --ds-ink:          #f5f5f0;
+  --ds-ink-2:        #a0a0a0;
+  --ds-ink-3:        #666666;
+  --ds-accent:       #00D4FF;
+  --ds-accent-2:     #38E1FF;
+  --ds-accent-glow:  rgba(0, 212, 255, 0.22);
+  --ds-live:         #00FF88;
 
-  --scheme-accent-100:  #030b10;
-  --scheme-accent-200:  #0d181d;
-  --scheme-accent-300:  #364248;
-  --scheme-accent-400:  #505d64;
-  --scheme-accent-500:  #69777e;
-  --scheme-accent-600:  #8a989f;
-  --scheme-accent-700:  #a8b7bf;
-  --scheme-accent-800:  #c8d7df;
-  --scheme-accent-900:  #d5e4ec;
-  --scheme-accent-1000: #e2f1f9;
-  --scheme-accent-1100: #e9f8ff;
-  --scheme-accent-1200: #efffff;
-  --scheme-accent-600-10: rgba(138,152,159,0.1);
-  --scheme-accent-600-30: rgba(138,152,159,0.3);
-  --scheme-accent-600-50: rgba(138,152,159,0.5);
+  /* ── Neo-Brutalist Radii: Raw & Sharp ───── */
+  --ds-r-chip:  0px;
+  --ds-r-btn:   0px;
+  --ds-r-card:  0px;
+  --ds-r-pill:  999px;
 
-  --scheme-neutral-100:  #020b10;
-  --scheme-neutral-200:  #0b181d;
-  --scheme-neutral-300:  #344248;
-  --scheme-neutral-400:  #4f5d64;
-  --scheme-neutral-500:  #68777e;
-  --scheme-neutral-600:  #89989f;
-  --scheme-neutral-700:  #a7b7be;
-  --scheme-neutral-800:  #c7d7df;
-  --scheme-neutral-900:  #d4e4ec;
-  --scheme-neutral-1000: #e1f2f9;
-  --scheme-neutral-1100: #e7f8ff;
-  --scheme-neutral-1200: #eeffff;
-  --scheme-neutral-600-10: rgba(137,152,159,0.1);
-  --scheme-neutral-600-30: rgba(137,152,159,0.3);
-  --scheme-neutral-600-50: rgba(137,152,159,0.5);
-  /*
-}*/
+  /* ── Neo-Brutalist Shadows ──────────────── */
+  --ds-shadow-sm: 2px 2px 0px var(--ds-accent);
+  --ds-shadow-md: 4px 4px 0px var(--ds-accent);
+  --ds-shadow-lg: 6px 6px 0px var(--ds-accent);
+
+  /* ── Motion ─────────────────────────────── */
+  --ds-dur-1: 120ms;
+  --ds-dur-2: 200ms;
+  --ds-dur-3: 360ms;
+  --ds-ease:  cubic-bezier(.2, .8, .2, 1);
+
+  /* ── Once UI Remaps ─────────────────────── */
+  --page-background:                  var(--ds-bg);
+  --surface-background:               var(--ds-surface);
+  --surface-background-hover:         var(--ds-surface-2);
+  --surface-border:                   var(--ds-border);
+  --neutral-border-medium:            var(--ds-border);
+  --neutral-border-strong:            var(--ds-border-strong);
+  --neutral-alpha-weak:               rgba(255, 255, 255, 0.05);
+  --neutral-alpha-medium:             rgba(255, 255, 255, 0.08);
+  --neutral-on-background-strong:     var(--ds-ink);
+  --neutral-on-background-medium:     var(--ds-ink-2);
+  --neutral-on-background-weak:       var(--ds-ink-3);
+  --brand-on-background-weak:         var(--ds-accent);
+  --brand-solid-medium:               var(--ds-accent);
+  --brand-alpha-medium:               rgba(0, 212, 255, 0.15);
+  --brand-alpha-weak:                 rgba(0, 212, 255, 0.07);
+  --accent-background-strong:         var(--ds-accent);
+  --accent-on-background-weak:        var(--ds-accent);
+  --radius-m:                         var(--ds-r-card);
+  --radius-s:                         var(--ds-r-btn);
+  --radius-xs:                        var(--ds-r-chip);
+}
+
+/* Page Background: Spider-Verse Halftone Double-Dot Grid */
+html,
+body,
+[data-theme="dark"],
+[data-theme="light"] {
+  background-color: #0c0c0c !important;
+  color: #f5f5f0 !important;
+  background-image:
+    radial-gradient(circle, rgba(0, 212, 255, 0.08) 1.5px, transparent 1.5px),
+    radial-gradient(circle, rgba(255, 255, 255, 0.04) 1px, transparent 1px) !important;
+  background-size: 32px 32px, 16px 16px !important;
+  background-position: 0 0, 8px 8px !important;
+  background-attachment: fixed !important;
+}
+
+/* Typography Helpers */
+.font-condensed {
+  font-family: var(--font-condensed) !important;
+}
+
+/* Buttons: Neo-Brutalist Sharp Rectangles with Offset Shadows */
+button[data-variant="primary"],
+a[data-variant="primary"] {
+  background: var(--ds-accent) !important;
+  color: #0c0c0c !important;
+  border: 2px solid var(--ds-accent) !important;
+  border-radius: 0px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.04em !important;
+  text-transform: uppercase !important;
+  box-shadow: 4px 4px 0px #ffffff !important;
+  transition: transform var(--ds-dur-2) var(--ds-ease), box-shadow var(--ds-dur-2) var(--ds-ease) !important;
+}
+
+button[data-variant="primary"]:hover,
+a[data-variant="primary"]:hover {
+  transform: translate(-2px, -2px) !important;
+  box-shadow: 6px 6px 0px #ffffff !important;
+}
+
+button[data-variant="secondary"],
+a[data-variant="secondary"] {
+  background: #121212 !important;
+  border: 2px solid var(--ds-border-strong) !important;
+  color: var(--ds-ink) !important;
+  border-radius: 0px !important;
+  font-weight: 600 !important;
+  box-shadow: 4px 4px 0px var(--ds-border) !important;
+  transition: border-color var(--ds-dur-2) var(--ds-ease), transform var(--ds-dur-2) var(--ds-ease), box-shadow var(--ds-dur-2) var(--ds-ease), color var(--ds-dur-2) var(--ds-ease) !important;
+}
+
+button[data-variant="secondary"]:hover,
+a[data-variant="secondary"]:hover {
+  border-color: var(--ds-accent) !important;
+  color: #ffffff !important;
+  transform: translate(-2px, -2px) !important;
+  box-shadow: 6px 6px 0px var(--ds-accent) !important;
+}
+
+/* Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

@@ -1,6 +1,7 @@
 "use client";
 
-import { Carousel, Column, Flex, Heading, SmartLink, Text } from "@once-ui-system/core";
+import { Carousel, Column, SmartLink, Text, Icon } from "@once-ui-system/core";
+import styles from "./ProjectCard.module.scss";
 
 interface ProjectCardProps {
   href: string;
@@ -23,50 +24,46 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
   link,
 }) => {
   return (
-    <Column fillWidth gap="m">
-      <Carousel
-        sizes="(max-width: 960px) 100vw, 960px"
-        items={images.map((image) => ({
-          slide: image,
-          alt: title,
-        }))}
-      />
-      <Flex
-        s={{ direction: "column" }}
-        fillWidth
-        paddingX="s"
-        paddingTop="12"
-        paddingBottom="24"
-        gap="l"
-      >
-        {title && (
-          <Flex flex={5}>
-            <Heading as="h2" wrap="balance" variant="heading-strong-xl">
-              {title}
-            </Heading>
-          </Flex>
+    <div className={styles.card}>
+      {images?.length > 0 && (
+        <div className={styles.imageFrame}>
+          <Carousel
+            aspectRatio="16 / 10"
+            sizes="(max-width: 960px) 100vw, 1200px"
+            items={images.map((image) => ({
+              slide: image,
+              alt: title,
+            }))}
+          />
+        </div>
+      )}
+
+      <div className={styles.contentWrapper}>
+        {title && <h3 className={styles.title}>{title}</h3>}
+
+        {description?.trim() && (
+          <p className={styles.description}>{description}</p>
         )}
-        {(avatars?.length > 0 || description?.trim() || content?.trim()) && (
-          <Column flex={7} gap="16">
-            {description?.trim() && (
-              <Text wrap="balance" variant="body-default-s" onBackground="neutral-weak">
-                {description}
-              </Text>
-            )}
-            <Flex gap="24" wrap>
-              {link && (
-                <SmartLink
-                  suffixIcon="arrowUpRightFromSquare"
-                  style={{ margin: "0", width: "fit-content" }}
-                  href={link}
-                >
-                  <Text variant="body-default-s">View project</Text>
-                </SmartLink>
-              )}
-            </Flex>
-          </Column>
-        )}
-      </Flex>
-    </Column>
+
+        <div className={styles.actionRow}>
+          <SmartLink href={href} className={styles.caseButton}>
+            <span>Read case file</span>
+            <Icon name="arrowRight" size="xs" />
+          </SmartLink>
+
+          {link && (
+            <SmartLink
+              href={link}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={styles.externalLink}
+            >
+              <span>View source</span>
+              <Icon name="arrowUpRightFromSquare" size="xs" />
+            </SmartLink>
+          )}
+        </div>
+      </div>
+    </div>
   );
 };

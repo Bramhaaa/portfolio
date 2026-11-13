@@ -2,51 +2,33 @@
   position: relative;
   isolation: isolate;
   width: 100%;
-  padding: 48px 0;
-  --bg-secondary: var(--neutral-alpha-weak);
-  --card: var(--surface-background);
-  --card-hover: var(--surface-background);
-  --border: var(--surface-border);
-  --border-hover: var(--neutral-border-strong);
-  --text-primary: var(--neutral-on-background-strong);
-  --text-secondary: var(--neutral-on-background-medium);
-  --text-muted: var(--neutral-on-background-weak);
-  --accent: var(--brand-on-background-weak);
-  --success: var(--success-on-background-medium);
-  --warning: var(--warning-on-background-medium);
-  --danger: var(--danger-on-background-medium);
-  // Heatmap colors for Light Mode (High Contrast Cyan Scale)
-  --heatmap-level-0: #ebedf0; // Soft light gray (matches GitHub light mode)
-  --heatmap-level-1: #c5f2f7; // Bright pastel cyan
-  --heatmap-level-2: #67e8f9; // Vibrant cyan
-  --heatmap-level-3: #0891b2; // Deep cyan
-  --heatmap-level-4: #0369a1; // Rich ocean blue
+  padding: 32px 0;
 
-  // Heatmap colors for Dark Mode (Neon Cyan Scale)
-  :global([data-theme="dark"]) & {
-    --heatmap-level-0: #161b22; // Deep dark gray (matches GitHub dark mode)
-    --heatmap-level-1: #004b57; // Deep dark cyan
-    --heatmap-level-2: #007a8c; // Teal-cyan
-    --heatmap-level-3: #00b4d8; // Sky-cyan
-    --heatmap-level-4: #00f5ff; // Neon electric cyan
-  }
-  --graph-line: var(--brand-solid-medium);
-  --graph-gradient-start: var(--brand-alpha-medium);
-  --graph-gradient-end: var(--static-transparent);
+  /* Design System Token Wiring */
+  --bg-secondary: var(--ds-surface-2);
+  --card: #141414;
+  --card-hover: #181818;
+  --border: var(--ds-border);
+  --border-hover: var(--ds-accent);
+  --text-primary: var(--ds-ink);
+  --text-secondary: var(--ds-ink-2);
+  --text-muted: var(--ds-ink-3);
+  --accent: var(--ds-accent);
+  --success: var(--ds-live);
+  --warning: #FFB800;
+  --danger: #EF4444;
+
+  /* Heatmap colors (Dark-to-Cyan Scale) */
+  --heatmap-level-0: #18181B;
+  --heatmap-level-1: #003847;
+  --heatmap-level-2: #006c8a;
+  --heatmap-level-3: #00a8cf;
+  --heatmap-level-4: #00D4FF;
+
+  --graph-line: var(--ds-accent);
+  --graph-gradient-start: rgba(0, 212, 255, 0.28);
+  --graph-gradient-end: rgba(0, 212, 255, 0);
   color: var(--text-primary);
-
-  &::before {
-    content: "";
-    position: absolute;
-    z-index: -1;
-    inset: -8% -10%;
-    pointer-events: none;
-    background:
-      radial-gradient(ellipse 55% 42% at 18% 20%, var(--brand-alpha-weak), transparent 72%),
-      radial-gradient(ellipse 48% 38% at 84% 58%, var(--accent-alpha-weak), transparent 74%);
-    opacity: 0.55;
-    mask-image: linear-gradient(to bottom, transparent, black 16%, black 84%, transparent);
-  }
 }
 
 .dashboardColumn {
@@ -57,100 +39,95 @@
   position: relative;
   z-index: 1;
   background: var(--card);
-  backdrop-filter: var(--backdrop-filter);
-  -webkit-backdrop-filter: var(--backdrop-filter);
-  border: 1px solid var(--border);
-  border-radius: 16px;
+  border: 2px solid var(--border);
+  border-radius: 0px;
   padding: 24px;
-  box-shadow: var(--shadow-xs);
+  box-shadow: 4px 4px 0px #000000;
   transition:
-    border-color 0.2s ease,
-    box-shadow 0.2s ease,
-    background 0.2s ease;
+    transform var(--ds-dur-2) var(--ds-ease),
+    border-color var(--ds-dur-2) var(--ds-ease),
+    box-shadow var(--ds-dur-2) var(--ds-ease);
   overflow: visible;
 
   &:hover {
-    border-color: var(--border-hover);
-    background: var(--card-hover);
-    box-shadow: var(--shadow-s);
+    transform: translate(-2px, -2px);
+    border-color: var(--ds-accent);
+    box-shadow: 6px 6px 0px var(--ds-accent);
   }
 }
 
-// Large emphasis metrics
+// Tabular metric numbers in Violet Bebas Neue
 .metricValue {
-  font-family: var(--font-heading), sans-serif;
-  font-size: 2.25rem;
-  font-weight: 700;
-  letter-spacing: -0.03em;
-  color: var(--text-primary);
+  font-family: var(--font-condensed), sans-serif;
+  font-size: 2.75rem;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  font-variant-numeric: tabular-nums;
+  color: var(--ds-accent);
   line-height: 1;
 }
 
-// Secondary label styling
+// Monospace label styling
 .metricLabel {
-  font-size: 0.8125rem;
+  font-family: var(--font-code), monospace;
+  font-size: 11px;
   color: var(--text-muted);
-  font-weight: 500;
-  letter-spacing: 0.01em;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
 }
 
-// Custom pill-shaped progress bars
+// Clean 4px hairline progress bars
 .progressBarContainer {
   width: 100%;
   height: 6px;
-  background: var(--bg-secondary);
-  border-radius: 9999px;
+  background: var(--ds-border);
+  border-radius: 0px;
   overflow: hidden;
   position: relative;
 }
 
 .progressBarFill {
   height: 100%;
-  border-radius: 9999px;
-  transition: width 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  border-radius: 0px;
+  transition: width 0.8s var(--ds-ease);
   position: relative;
-  
-  &::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: linear-gradient(90deg, rgba(255, 255, 255, 0.1) 0%, transparent 100%);
-  }
 }
 
 .platformBadge {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
-  padding: 8px 14px;
-  background: var(--bg-secondary);
-  border: 1px solid var(--border);
-  border-radius: 10px;
+  gap: 6px;
+  padding: 6px 12px;
+  background: #181818;
+  border: 2px solid var(--border);
+  border-radius: 0px;
+  box-shadow: 2px 2px 0px #000000;
   transition:
-    background 0.2s ease,
-    border-color 0.2s ease;
-  
+    transform var(--ds-dur-1) var(--ds-ease),
+    box-shadow var(--ds-dur-1) var(--ds-ease),
+    border-color var(--ds-dur-1) var(--ds-ease);
+  text-decoration: none;
+
   &:hover {
-    background: var(--neutral-alpha-medium);
-    border-color: var(--neutral-border-strong);
+    transform: translate(-1px, -1px);
+    border-color: var(--ds-accent);
+    box-shadow: 3px 3px 0px var(--ds-accent);
   }
 }
 
-// Sleek interactive chart tooltips (styled to match card backgrounds and border themes)
+// Sleek interactive chart tooltips
 .customTooltip {
   position: absolute;
-  background: var(--card);
-  border: 1px solid var(--border-hover);
+  background: #181818;
+  border: 2px solid var(--ds-accent);
   padding: 10px 14px;
-  border-radius: 8px;
+  border-radius: 0px;
   pointer-events: none;
   z-index: 100;
-  box-shadow: var(--shadow-m);
+  box-shadow: 4px 4px 0px #000000;
   white-space: nowrap;
-  animation: tooltipFadeIn 0.15s ease-out;
+  animation: tooltipFadeIn 0.15s var(--ds-ease);
 }
 
 @keyframes tooltipFadeIn {

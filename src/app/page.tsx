@@ -1,20 +1,9 @@
-import {
-  Heading,
-  Text,
-  Button,
-  Avatar,
-  RevealFx,
-  Column,
-  Badge,
-  Row,
-  Schema,
-  Meta,
-  Line,
-} from "@once-ui-system/core";
-import { home, about, person, baseURL, routes } from "@/resources";
+import Link from "next/link";
+import { Schema, Meta } from "@once-ui-system/core";
+import { home, about, person, baseURL } from "@/resources";
 import { Mailto, CodingStats, ResumeViewer } from "@/components";
 import { Projects } from "@/components/work/Projects";
-import { Posts } from "@/components/blog/Posts";
+import styles from "./page.module.scss";
 
 export async function generateMetadata() {
   return Meta.generate({
@@ -28,7 +17,7 @@ export async function generateMetadata() {
 
 export default function Home() {
   return (
-    <Column maxWidth="m" gap="xl" paddingY="12" horizontal="center">
+    <div style={{ width: "100%", display: "flex", flexDirection: "column", alignItems: "center" }}>
       <Schema
         as="webPage"
         baseURL={baseURL}
@@ -42,64 +31,121 @@ export default function Home() {
           image: `${baseURL}${person.avatar}`,
         }}
       />
-      <Column fillWidth horizontal="center" gap="m">
-        <Column maxWidth="s" horizontal="center" align="center">
-          <RevealFx translateY="4" fillWidth horizontal="center" paddingBottom="16">
-            <Heading wrap="balance" variant="display-strong-l">
-              {home.headline}
-            </Heading>
-          </RevealFx>
-          <RevealFx translateY="8" delay={0.2} fillWidth horizontal="center" paddingBottom="32">
-            <Text wrap="balance" onBackground="neutral-weak" variant="heading-default-xl">
-              {home.subline}
-            </Text>
-          </RevealFx>
-          <RevealFx paddingTop="12" delay={0.4} horizontal="center" paddingLeft="12">
-            <Button
-              id="about"
-              data-border="rounded"
-              href={about.path}
-              variant="secondary"
-              size="m"
-              weight="default"
-              arrowIcon
-            >
-              <Row gap="8" vertical="center" paddingRight="4">
-                {about.avatar.display && (
-                  <Avatar
-                    marginRight="8"
-                    style={{ marginLeft: "-0.75rem" }}
-                    src={person.avatar}
-                    size="m"
-                  />
-                )}
-                {about.title}
-              </Row>
-            </Button>
-          </RevealFx>
-        </Column>
-      </Column>
+
+      {/* Hero Section — Decluttered, High-Impact Neo-Brutalist */}
+      <section className={styles.heroWrapper}>
+        {/* Giant Outlined Word behind everything (Spider-Verse street-art backdrop) */}
+        <div className={styles.outlinedHeroWord}>DEVELOPER</div>
+
+        <div className={styles.heroContent}>
+          <div className={styles.nameBlock}>
+            <span className={styles.greetingText}>Hello, I'm</span>
+            <div className={styles.accentNameBox}>BRAMHA.</div>
+          </div>
+
+          <div className={styles.roleLine}>
+            <span className={styles.roleBullet} />
+            <span className={styles.roleTitle}>Software Engineer</span>
+          </div>
+
+          <p className={styles.introBio}>
+            I build apps for <strong>Mac, Android, and the web</strong>, then engineer{" "}
+            <strong>scalable backends and local-first AI systems</strong>. When the code is
+            done, I'm usually <strong>learning new architectures or solving algorithmic problems</strong>.
+          </p>
+
+          <div className={styles.ctaRow}>
+            <a href="#work" className={styles.primaryCta}>
+              See the work →
+            </a>
+            <a href={`mailto:${person.email}`} className={styles.ghostCta}>
+              Get in touch
+            </a>
+          </div>
+        </div>
+
+        {/* Bottom Stats Row */}
+        <div className={styles.statsRow}>
+          <div className={styles.statBox}>
+            <span className={styles.statNum}>9.13</span>
+            <span className={styles.statLabel}>CGPA @ BMS College of Engineering</span>
+          </div>
+
+          <div className={styles.statBox}>
+            <span className={styles.statNum}>2+</span>
+            <span className={styles.statLabel}>Internships across Samsung & AI labs</span>
+          </div>
+
+          <div className={styles.statBox}>
+            <span className={styles.statNum}>2027</span>
+            <span className={styles.statLabel}>Graduating Computer Science</span>
+          </div>
+        </div>
+      </section>
+
+      {/* On The Bench Section — Dedicated Clean Neo-Brutalist Grid */}
+      <section className={styles.sectionContainer}>
+        <div className={styles.sectionHeader}>
+          <div className={styles.sectionBadge}>ACTIVE LABS</div>
+          <h2 className={styles.sectionTitle}>On the bench right now.</h2>
+          <p className={styles.sectionSubtitle}>
+            Prototypes, local-first architectures, and system utilities currently in development.
+          </p>
+        </div>
+
+        <div className={styles.benchGrid}>
+          <div className={styles.benchCard}>
+            <div className={styles.benchCardTag}>LOCAL-FIRST RAG</div>
+            <h3 className={styles.benchCardTitle}>PaperMind Workspace</h3>
+            <p className={styles.benchCardDesc}>
+              A local-first, privacy-focused document intelligence workspace powered by hybrid RAG and pgvector.
+            </p>
+          </div>
+
+          <div className={styles.benchCard}>
+            <div className={styles.benchCardTag}>MACOS UTILITY</div>
+            <h3 className={styles.benchCardTitle}>Hover Dock</h3>
+            <p className={styles.benchCardDesc}>
+              Native macOS lightweight utility bringing interactive window previews and controls to Dock icons.
+            </p>
+          </div>
+
+          <div className={styles.benchCard}>
+            <div className={styles.benchCardTag}>REAL-TIME AI</div>
+            <h3 className={styles.benchCardTitle}>Search & Chat Engine</h3>
+            <p className={styles.benchCardDesc}>
+              FastAPI and WebSocket conversational search engine querying documents with low-latency streaming AI.
+            </p>
+          </div>
+        </div>
+      </section>
 
       {/* Projects Section */}
-      <Column fillWidth gap="m" paddingX="l" style={{ maxWidth: "80rem", margin: "0 auto" }}>
-        <Column gap="4" align="center" fillWidth marginBottom="m">
-          <Heading as="h2" variant="display-strong-s">
-            Projects
-          </Heading>
-          <Text variant="body-default-m" onBackground="neutral-weak">
-            Some of the things I've built and worked on.
-          </Text>
-        </Column>
+      <section id="work" className={styles.sectionContainer}>
+        <div className={styles.sectionHeader}>
+          <div className={styles.sectionBadge}>PORTFOLIO</div>
+          <h2 className={styles.sectionTitle}>Things I've shipped.</h2>
+          <p className={styles.sectionSubtitle}>
+            Native applications, developer tools, and scalable intelligent systems.
+          </p>
+        </div>
         <Projects />
-      </Column>
+      </section>
 
       {/* Coding Stats Dashboard */}
-      <CodingStats />
+      <section id="stack" style={{ width: "100%" }}>
+        <CodingStats />
+      </section>
 
       {/* Resume Section */}
-      <ResumeViewer />
+      <section style={{ width: "100%" }}>
+        <ResumeViewer />
+      </section>
 
-      <Mailto />
-    </Column>
+      {/* Contact Section */}
+      <section style={{ width: "100%" }}>
+        <Mailto />
+      </section>
+    </div>
   );
 }

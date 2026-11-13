@@ -19,7 +19,7 @@ const baseURL: string = "https://bramhabajannavar.vercel.app";
 const routes: RoutesConfig = {
   "/": true,
   "/about": true,
-  "/work": false,
+  "/work": true,
   "/blog": false,
 };
 
@@ -73,11 +73,11 @@ const style: StyleConfig = {
   theme: "dark", // dark | light | system
   neutral: "gray", // sand | gray | slate | mint | rose | dusk | custom
   brand: "cyan", // blue | indigo | violet | magenta | pink | red | orange | yellow | moss | green | emerald | aqua | cyan | custom
-  accent: "red", // blue | indigo | violet | magenta | pink | red | orange | yellow | moss | green | emerald | aqua | cyan | custom
+  accent: "cyan", // blue | indigo | violet | magenta | pink | red | orange | yellow | moss | green | emerald | aqua | cyan | custom
   solid: "contrast", // color | contrast
   solidStyle: "flat", // flat | plastic
-  border: "playful", // rounded | playful | conservative | sharp
-  surface: "translucent", // filled | translucent
+  border: "conservative", // rounded | playful | conservative
+  surface: "filled", // filled | translucent
   transition: "all", // all | micro | macro
   scaling: "100", // 90 | 95 | 100 | 105 | 110
 };
@@ -98,13 +98,13 @@ const dataStyle: DataStyleConfig = {
 
 const effects: EffectsConfig = {
   mask: {
-    cursor: true,
+    cursor: false,
     x: 50,
     y: 0,
-    radius: 75,
+    radius: 0,
   },
   gradient: {
-    display: true,
+    display: false,
     opacity: 50,
     x: 50,
     y: 37.5,
@@ -116,7 +116,7 @@ const effects: EffectsConfig = {
   },
   dots: {
     display: true,
-    opacity: 20,
+    opacity: 8,
     size: "2",
     color: "brand-on-background-weak",
   },
@@ -141,13 +141,13 @@ const mailchimp: MailchimpConfig = {
   action: "https://url/subscribe/post?parameters",
   effects: {
     mask: {
-      cursor: true,
+      cursor: false,
       x: 50,
       y: 0,
-      radius: 100,
+      radius: 0,
     },
     gradient: {
-      display: true,
+      display: false,
       opacity: 90,
       x: 50,
       y: 0,
@@ -158,7 +158,7 @@ const mailchimp: MailchimpConfig = {
       colorEnd: "static-transparent",
     },
     dots: {
-      display: true,
+      display: false,
       opacity: 20,
       size: "2",
       color: "brand-on-background-weak",

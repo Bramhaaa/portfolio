@@ -509,14 +509,25 @@ export function CodingStats() {
           gap="xl"
           paddingX="l"
           marginBottom="40"
-          style={{ maxWidth: "80rem", margin: "0 auto" }}
+          style={{ maxWidth: "1320px", margin: "0 auto" }}
         >
           {/* Section Title */}
-          <Column gap="4" align="center" fillWidth>
-            <Heading as="h2" variant="display-strong-s">
-              Coding Metrics & Activity
+          <Column gap="8" align="center" fillWidth marginBottom="m">
+            <Heading
+              as="h2"
+              style={{
+                fontFamily: "var(--font-condensed)",
+                fontSize: "clamp(36px, 5vw, 56px)",
+                letterSpacing: "0.02em",
+                textTransform: "uppercase",
+                lineHeight: 1.0,
+                color: "var(--ds-ink)",
+                margin: 0,
+              }}
+            >
+              By the numbers.
             </Heading>
-            <Text variant="body-default-m" style={{ color: "var(--text-secondary)" }}>
+            <Text variant="body-default-m" style={{ color: "var(--text-secondary)", margin: 0, fontSize: "14px" }}>
               Real-time developer stats aggregated across coding platforms.
             </Text>
           </Column>

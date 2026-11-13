@@ -122,13 +122,29 @@ export default function About() {
             vertical="center"
             marginBottom="32"
           >
-            <Heading className={styles.textAlign} variant="display-strong-xl">
+            <Heading
+              className={styles.textAlign}
+              style={{
+                fontFamily: "var(--font-condensed)",
+                fontSize: "clamp(48px, 7vw, 76px)",
+                letterSpacing: "0.02em",
+                textTransform: "uppercase",
+                lineHeight: 0.95,
+                color: "var(--ds-ink)",
+              }}
+            >
               {person.name}
             </Heading>
             <Text
               className={styles.textAlign}
-              variant="display-default-xs"
-              onBackground="neutral-weak"
+              style={{
+                fontFamily: "var(--font-code)",
+                fontSize: "13px",
+                letterSpacing: "0.08em",
+                textTransform: "uppercase",
+                color: "var(--ds-accent)",
+                marginTop: "6px",
+              }}
             >
               {person.role}
             </Text>
@@ -184,21 +200,49 @@ export default function About() {
 
           {about.work.display && (
             <>
-              <Heading as="h2" id={about.work.title} variant="display-strong-s" marginBottom="m">
+              <Heading
+                as="h2"
+                id={about.work.title}
+                style={{
+                  fontFamily: "var(--font-condensed)",
+                  fontSize: "clamp(32px, 5vw, 44px)",
+                  letterSpacing: "0.02em",
+                  textTransform: "uppercase",
+                  color: "var(--ds-ink)",
+                }}
+                marginBottom="m"
+              >
                 {about.work.title}
               </Heading>
               <Column fillWidth gap="l" marginBottom="40">
                 {about.work.experiences.map((experience, index) => (
-                  <Column key={`${experience.company}-${experience.role}-${index}`} fillWidth>
+                  <Column
+                    key={`${experience.company}-${experience.role}-${index}`}
+                    fillWidth
+                    className={styles.timelineEntry}
+                  >
                     <Row fillWidth horizontal="between" vertical="end" marginBottom="4">
                       <Text id={experience.company} variant="heading-strong-l">
                         {experience.company}
                       </Text>
-                      <Text variant="heading-default-xs" onBackground="neutral-weak">
+                      <Text
+                        variant="heading-default-xs"
+                        style={{ fontFamily: "var(--font-code)", color: "var(--ds-ink-3)" }}
+                      >
                         {experience.timeframe}
                       </Text>
                     </Row>
-                    <Text variant="body-default-s" onBackground="brand-weak" marginBottom="m">
+                    <Text
+                      variant="body-default-s"
+                      style={{
+                        color: "var(--ds-accent)",
+                        fontFamily: "var(--font-code)",
+                        fontSize: "12px",
+                        letterSpacing: "0.06em",
+                        textTransform: "uppercase",
+                      }}
+                      marginBottom="m"
+                    >
                       {experience.role}
                     </Text>
                     <Column as="ul" gap="16">
@@ -246,7 +290,13 @@ export default function About() {
               <Heading
                 as="h2"
                 id={about.projects.title}
-                variant="display-strong-s"
+                style={{
+                  fontFamily: "var(--font-condensed)",
+                  fontSize: "clamp(32px, 5vw, 44px)",
+                  letterSpacing: "0.02em",
+                  textTransform: "uppercase",
+                  color: "var(--ds-ink)",
+                }}
                 marginBottom="m"
               >
                 {about.projects.title}
@@ -266,10 +316,11 @@ export default function About() {
                           size="s"
                           weight="default"
                           variant="secondary"
+                          style={{ borderRadius: "var(--ds-r-btn)" }}
                         />
                       )}
                     </Row>
-                    <Text variant="body-default-s" onBackground="brand-weak" marginBottom="m">
+                    <Text variant="body-default-s" style={{ color: "var(--ds-accent)", fontFamily: "var(--font-code)", fontSize: "12px" }} marginBottom="m">
                       {project.description}
                     </Text>
                     <Column as="ul" gap="16">
@@ -291,7 +342,18 @@ export default function About() {
 
           {about.studies.display && (
             <>
-              <Heading as="h2" id={about.studies.title} variant="display-strong-s" marginBottom="m">
+              <Heading
+                as="h2"
+                id={about.studies.title}
+                style={{
+                  fontFamily: "var(--font-condensed)",
+                  fontSize: "clamp(32px, 5vw, 44px)",
+                  letterSpacing: "0.02em",
+                  textTransform: "uppercase",
+                  color: "var(--ds-ink)",
+                }}
+                marginBottom="m"
+              >
                 {about.studies.title}
               </Heading>
               <Column fillWidth gap="l" marginBottom="40">
@@ -314,7 +376,13 @@ export default function About() {
               <Heading
                 as="h2"
                 id={about.technical.title}
-                variant="display-strong-s"
+                style={{
+                  fontFamily: "var(--font-condensed)",
+                  fontSize: "clamp(32px, 5vw, 44px)",
+                  letterSpacing: "0.02em",
+                  textTransform: "uppercase",
+                  color: "var(--ds-ink)",
+                }}
                 marginBottom="32"
               >
                 {about.technical.title}

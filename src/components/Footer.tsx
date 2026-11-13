@@ -1,4 +1,4 @@
-import { Row, IconButton, SmartLink, Text } from "@once-ui-system/core";
+import { Row, IconButton, Text } from "@once-ui-system/core";
 import { person, social } from "@/resources";
 import styles from "./Footer.module.scss";
 
@@ -6,11 +6,18 @@ export const Footer = () => {
   const currentYear = new Date().getFullYear();
 
   return (
-    <Row as="footer" fillWidth padding="8" horizontal="center" s={{ direction: "column" }}>
+    <Row
+      as="footer"
+      fillWidth
+      padding="8"
+      horizontal="center"
+      s={{ direction: "column" }}
+      style={{ borderTop: "2px solid var(--ds-border)", marginTop: "32px" }}
+    >
       <Row
         className={styles.mobile}
         maxWidth="m"
-        paddingY="8"
+        paddingY="12"
         paddingX="16"
         gap="16"
         horizontal="between"
@@ -21,11 +28,18 @@ export const Footer = () => {
           align: "center",
         }}
       >
-        <Text variant="body-default-s" onBackground="neutral-strong">
-          <Text onBackground="neutral-weak">© {currentYear} /</Text>
-          <Text paddingX="4">{person.name}</Text>
+        <Text
+          variant="body-default-s"
+          style={{
+            fontFamily: "var(--font-code)",
+            fontSize: "12px",
+            color: "var(--ds-ink-3)",
+          }}
+        >
+          <span>© {currentYear} /</span>
+          <span style={{ padding: "0 6px", color: "var(--ds-ink-2)" }}>{person.name}</span>
         </Text>
-        <Row gap="16">
+        <Row gap="12">
           {social.map(
             (item) =>
               item.link && (
@@ -36,6 +50,7 @@ export const Footer = () => {
                   tooltip={item.name}
                   size="s"
                   variant="ghost"
+                  style={{ color: "var(--ds-ink-2)" }}
                 />
               ),
           )}

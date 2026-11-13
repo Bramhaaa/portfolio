@@ -28,7 +28,17 @@ export default function Work() {
           image: `${baseURL}${person.avatar}`,
         }}
       />
-      <Heading marginBottom="l" variant="heading-strong-xl" align="center">
+      <Heading
+        marginBottom="l"
+        align="center"
+        style={{
+          fontFamily: "var(--font-condensed)",
+          fontSize: "clamp(44px, 6vw, 64px)",
+          letterSpacing: "0.02em",
+          textTransform: "uppercase",
+          color: "var(--ds-ink)",
+        }}
+      >
         {work.title}
       </Heading>
       <Projects />

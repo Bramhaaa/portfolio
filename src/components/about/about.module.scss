@@ -1,38 +1,92 @@
 @use "../breakpoints.scss" as breakpoints;
 
 .hover {
-    transition: var(--transition-micro-medium);
+  transition: var(--transition-micro-medium);
 
-    &:hover {
-        transform: translateX(var(--static-space-4));
-    }
+  &:hover {
+    transform: translateX(var(--static-space-4));
+  }
 }
 
 @media (max-width: breakpoints.$s) {
-    .textAlign {
-        text-align: center;
-    }
+  .textAlign {
+    text-align: center;
+  }
 
-    .blockAlign {
-        align-self: center;
-    }
+  .blockAlign {
+    align-self: center;
+  }
+}
+
+/* Timeline left-rail entry */
+.timelineEntry {
+  position: relative;
+  padding-left: 24px;
+  margin-bottom: 32px;
+
+  &::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 8px;
+    bottom: -16px;
+    width: 2px;
+    background: var(--ds-border);
+  }
+
+  &:last-child::before {
+    bottom: 8px;
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    left: -4px;
+    top: 6px;
+    width: 10px;
+    height: 10px;
+    border-radius: 0px;
+    background: var(--ds-accent);
+    border: 2px solid #ffffff;
+    box-shadow: 2px 2px 0px #000000;
+  }
 }
 
 .techCard {
-    transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
-    border: 1px solid var(--neutral-alpha-weak);
-    
-    &:hover {
-        transform: translateY(-2px);
-        border-color: var(--neutral-alpha-medium) !important;
-    }
+  transition:
+    transform var(--ds-dur-2) var(--ds-ease),
+    border-color var(--ds-dur-2) var(--ds-ease),
+    box-shadow var(--ds-dur-2) var(--ds-ease);
+  background: #141414 !important;
+  border: 2px solid var(--ds-border) !important;
+  border-radius: 0px !important;
+  box-shadow: 4px 4px 0px #000000;
+
+  &:hover {
+    transform: translate(-2px, -2px);
+    border-color: var(--ds-accent) !important;
+    box-shadow: 6px 6px 0px var(--ds-accent);
+  }
 }
 
 .techChip {
-    transition: transform 0.2s ease, border-color 0.2s ease, background-color 0.2s ease !important;
-    
-    &:hover {
-        transform: translateY(-1px);
-        border-color: var(--neutral-on-background-weak) !important;
-    }
+  font-family: var(--font-code), monospace !important;
+  font-size: 12px !important;
+  border-radius: 0px !important;
+  border: 2px solid var(--ds-border) !important;
+  background: #181818 !important;
+  color: var(--ds-ink-2) !important;
+  box-shadow: 2px 2px 0px #000000;
+  transition:
+    transform var(--ds-dur-1) var(--ds-ease),
+    border-color var(--ds-dur-1) var(--ds-ease),
+    box-shadow var(--ds-dur-1) var(--ds-ease),
+    color var(--ds-dur-1) var(--ds-ease) !important;
+
+  &:hover {
+    transform: translate(-1px, -1px);
+    border-color: var(--ds-accent) !important;
+    color: #ffffff !important;
+    box-shadow: 3px 3px 0px var(--ds-accent);
+  }
 }

@@ -1,8 +1,7 @@
 "use client";
 
-import { mailchimp, newsletter, person } from "@/resources";
-import { Button, Heading, Text, Background, Column, Row } from "@once-ui-system/core";
-import { opacity, SpacingToken } from "@once-ui-system/core";
+import { newsletter, person } from "@/resources";
+import { Button, Heading, Text, Column, Row } from "@once-ui-system/core";
 
 export const Mailto: React.FC<React.ComponentProps<typeof Column>> = ({ ...flex }) => {
   if (newsletter.display === false) return null;
@@ -16,65 +15,52 @@ export const Mailto: React.FC<React.ComponentProps<typeof Column>> = ({ ...flex 
       marginBottom="m"
       horizontal="center"
       align="center"
-      background="surface"
-      border="neutral-alpha-weak"
+      style={{
+        maxWidth: "1280px",
+        margin: "0 auto",
+        position: "relative",
+        background: "#141414",
+        border: "2px solid var(--ds-border)",
+        borderRadius: "0px",
+        boxShadow: "6px 6px 0px #000000",
+      }}
       {...flex}
     >
-      <Background
-        top="0"
-        position="absolute"
-        mask={{
-          x: mailchimp.effects.mask.x,
-          y: mailchimp.effects.mask.y,
-          radius: mailchimp.effects.mask.radius,
-          cursor: mailchimp.effects.mask.cursor,
-        }}
-        gradient={{
-          display: mailchimp.effects.gradient.display,
-          opacity: mailchimp.effects.gradient.opacity as opacity,
-          x: mailchimp.effects.gradient.x,
-          y: mailchimp.effects.gradient.y,
-          width: mailchimp.effects.gradient.width,
-          height: mailchimp.effects.gradient.height,
-          tilt: mailchimp.effects.gradient.tilt,
-          colorStart: mailchimp.effects.gradient.colorStart,
-          colorEnd: mailchimp.effects.gradient.colorEnd,
-        }}
-        dots={{
-          display: mailchimp.effects.dots.display,
-          opacity: mailchimp.effects.dots.opacity as opacity,
-          size: mailchimp.effects.dots.size as SpacingToken,
-          color: mailchimp.effects.dots.color,
-        }}
-        grid={{
-          display: mailchimp.effects.grid.display,
-          opacity: mailchimp.effects.grid.opacity as opacity,
-          color: mailchimp.effects.grid.color,
-          width: mailchimp.effects.grid.width,
-          height: mailchimp.effects.grid.height,
-        }}
-        lines={{
-          display: mailchimp.effects.lines.display,
-          opacity: mailchimp.effects.lines.opacity as opacity,
-          size: mailchimp.effects.lines.size as SpacingToken,
-          thickness: mailchimp.effects.lines.thickness,
-          angle: mailchimp.effects.lines.angle,
-          color: mailchimp.effects.lines.color,
-        }}
-      />
-      <Column maxWidth="xs" horizontal="center" style={{ zIndex: 1 }}>
-        <Heading marginBottom="s" variant="display-strong-xs">
-          {newsletter.title}
+      <Column maxWidth="s" horizontal="center" align="center" gap="16">
+        <Heading
+          as="h2"
+          style={{
+            fontFamily: "var(--font-condensed)",
+            fontSize: "clamp(36px, 5vw, 56px)",
+            letterSpacing: "0.02em",
+            textTransform: "uppercase",
+            lineHeight: 1.0,
+            color: "var(--ds-ink)",
+            margin: 0,
+            textAlign: "center",
+          }}
+        >
+          Got something to build?
         </Heading>
-        <Text wrap="balance" marginBottom="l" variant="body-default-l" onBackground="neutral-weak">
-          {newsletter.description}
+        <Text
+          wrap="balance"
+          variant="body-default-m"
+          style={{
+            color: "var(--ds-ink-2)",
+            textAlign: "center",
+            maxWidth: "46ch",
+            fontSize: "14px",
+          }}
+        >
+          Have a project, role, or question? Send me a direct email or connect through LinkedIn.
         </Text>
-        <Row height="48" vertical="center" fillWidth horizontal="center">
+        <Row height="48" vertical="center" fillWidth horizontal="center" paddingTop="8">
           <Button
             href={`mailto:${person.email}`}
             size="m"
+            variant="primary"
             suffixIcon="arrowUpRight"
-            data-border="rounded"
+            style={{ borderRadius: "var(--ds-r-btn)" }}
           >
             Send an email
           </Button>

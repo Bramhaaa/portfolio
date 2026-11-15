@@ -4,15 +4,17 @@
   max-width: 1120px;
   margin: 0 auto;
   padding: 40px 24px 48px 24px;
+  box-sizing: border-box;
+  overflow: hidden;
 }
 
-/* Outlined Word behind hero */
+/* Outlined Word behind hero (Clean non-overlapping Bebas Neue contours, perfectly centered) */
 .outlinedHeroWord {
-  font-family: var(--font-body), 'Geist', sans-serif;
-  font-size: clamp(84px, 18vw, 240px);
-  font-weight: 800;
-  line-height: 0.82;
-  letter-spacing: -0.04em;
+  font-family: 'Bebas Neue', var(--font-condensed), sans-serif;
+  font-size: clamp(56px, 10.5vw, 136px);
+  font-weight: 400;
+  line-height: 0.85;
+  letter-spacing: 0.04em;
   color: rgba(255, 255, 255, 0.05);
   -webkit-text-stroke: 2px rgba(255, 255, 255, 0.45);
   text-transform: uppercase;
@@ -20,16 +22,17 @@
   pointer-events: none;
   width: 100%;
   text-align: center;
-  margin-bottom: -44px;
+  margin: 0 auto -28px auto;
   position: relative;
   z-index: 1;
   opacity: 1;
+  white-space: nowrap;
   filter: drop-shadow(0 0 24px var(--accent-soft));
   transition: filter 0.6s ease;
 
   @media (max-width: 900px) {
-    margin-bottom: -22px;
-    font-size: clamp(60px, 16vw, 120px);
+    margin-bottom: -16px;
+    font-size: clamp(44px, 11vw, 92px);
     -webkit-text-stroke: 1.5px rgba(255, 255, 255, 0.45);
   }
 }

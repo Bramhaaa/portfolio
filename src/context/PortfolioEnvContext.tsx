@@ -15,68 +15,16 @@ export interface AnimalTheme {
   name: string;
   accent: string;
   accentRgb: string;
-  glassGlow: string;
-  glassBgStart: string;
-  glassBgEnd: string;
 }
 
 export const ANIMAL_THEMES: Record<AnimalKey, AnimalTheme> = {
-  butterflies: {
-    name: "Cyan",
-    accent: "#00d4ff",
-    accentRgb: "0, 212, 255",
-    glassGlow: "rgba(0, 212, 255, 0.12)",
-    glassBgStart: "rgba(10, 20, 32, 0.90)",
-    glassBgEnd: "rgba(6, 12, 20, 0.82)",
-  },
-  dragonflies: {
-    name: "Emerald Green",
-    accent: "#00ff9d",
-    accentRgb: "0, 255, 157",
-    glassGlow: "rgba(0, 255, 157, 0.12)",
-    glassBgStart: "rgba(10, 26, 20, 0.90)",
-    glassBgEnd: "rgba(6, 16, 12, 0.82)",
-  },
-  koi: {
-    name: "Warm Amber",
-    accent: "#ffaa00",
-    accentRgb: "255, 170, 0",
-    glassGlow: "rgba(255, 170, 0, 0.12)",
-    glassBgStart: "rgba(26, 20, 10, 0.90)",
-    glassBgEnd: "rgba(16, 11, 6, 0.82)",
-  },
-  jellyfish: {
-    name: "Neon Magenta",
-    accent: "#ff3399",
-    accentRgb: "255, 51, 153",
-    glassGlow: "rgba(255, 51, 153, 0.12)",
-    glassBgStart: "rgba(26, 10, 22, 0.90)",
-    glassBgEnd: "rgba(16, 6, 14, 0.82)",
-  },
-  frogs: {
-    name: "Electric Lime",
-    accent: "#70e000",
-    accentRgb: "112, 224, 0",
-    glassGlow: "rgba(112, 224, 0, 0.12)",
-    glassBgStart: "rgba(14, 24, 10, 0.90)",
-    glassBgEnd: "rgba(8, 16, 6, 0.82)",
-  },
-  cranes: {
-    name: "Ice Sapphire",
-    accent: "#8ec5fc",
-    accentRgb: "142, 197, 252",
-    glassGlow: "rgba(142, 197, 252, 0.12)",
-    glassBgStart: "rgba(14, 18, 30, 0.90)",
-    glassBgEnd: "rgba(8, 11, 20, 0.82)",
-  },
-  crabs: {
-    name: "Coral Ember",
-    accent: "#ff5533",
-    accentRgb: "255, 85, 51",
-    glassGlow: "rgba(255, 85, 51, 0.12)",
-    glassBgStart: "rgba(26, 12, 10, 0.90)",
-    glassBgEnd: "rgba(16, 8, 6, 0.82)",
-  },
+  butterflies: { name: "Cyan", accent: "#00d4ff", accentRgb: "0, 212, 255" },
+  dragonflies: { name: "Emerald Green", accent: "#00ff9d", accentRgb: "0, 255, 157" },
+  koi:         { name: "Warm Amber", accent: "#ffaa00", accentRgb: "255, 170, 0" },
+  jellyfish:   { name: "Neon Magenta", accent: "#ff3399", accentRgb: "255, 51, 153" },
+  frogs:       { name: "Electric Lime", accent: "#70e000", accentRgb: "112, 224, 0" },
+  cranes:      { name: "Ice Sapphire", accent: "#8ec5fc", accentRgb: "142, 197, 252" },
+  crabs:       { name: "Coral Ember", accent: "#ff5533", accentRgb: "255, 85, 51" },
 };
 
 interface PortfolioEnvContextType {
@@ -86,7 +34,6 @@ interface PortfolioEnvContextType {
   setTweaksOpen: (open: boolean | ((prev: boolean) => boolean)) => void;
   glassTuning: GlassTuning;
   setGlassTuning: (glass: GlassTuning | ((prev: GlassTuning) => GlassTuning)) => void;
-  currentTheme: AnimalTheme;
 }
 
 const PortfolioEnvContext = createContext<PortfolioEnvContextType>({
@@ -96,7 +43,6 @@ const PortfolioEnvContext = createContext<PortfolioEnvContextType>({
   setTweaksOpen: () => {},
   glassTuning: DEFAULT_GLASS,
   setGlassTuning: () => {},
-  currentTheme: ANIMAL_THEMES.koi,
 });
 
 export function PortfolioEnvProvider({ children }: { children: React.ReactNode }) {
@@ -128,24 +74,6 @@ export function PortfolioEnvProvider({ children }: { children: React.ReactNode }
     });
   };
 
-  // Sync animal theme hue & glow custom properties to documentElement
-  useEffect(() => {
-    if (!mounted) return;
-    const theme = ANIMAL_THEMES[selectedAnimal] || ANIMAL_THEMES.koi;
-    const root = document.documentElement;
-
-    root.style.setProperty("--accent", theme.accent);
-    root.style.setProperty("--accent-soft", `rgba(${theme.accentRgb}, 0.14)`);
-    root.style.setProperty("--accent-edge", `rgba(${theme.accentRgb}, 0.45)`);
-    root.style.setProperty("--focus", `rgba(${theme.accentRgb}, 0.35)`);
-    root.style.setProperty("--glass-glow", theme.glassGlow);
-    root.style.setProperty("--glass-bg-start", theme.glassBgStart);
-    root.style.setProperty("--glass-bg-end", theme.glassBgEnd);
-    root.style.setProperty("--ds-accent", theme.accent);
-    root.style.setProperty("--ds-accent-2", theme.accent);
-    root.style.setProperty("--ds-accent-glow", `rgba(${theme.accentRgb}, 0.14)`);
-  }, [selectedAnimal, mounted]);
-
   // Sync glass blur/tint/edge custom properties to documentElement
   useEffect(() => {
     if (!mounted) return;
@@ -154,8 +82,6 @@ export function PortfolioEnvProvider({ children }: { children: React.ReactNode }
     root.style.setProperty("--tint", `${glassTuning.tint}`);
     root.style.setProperty("--edge", `${glassTuning.edge}`);
   }, [glassTuning, mounted]);
-
-  const currentTheme = ANIMAL_THEMES[selectedAnimal] || ANIMAL_THEMES.koi;
 
   return (
     <PortfolioEnvContext.Provider
@@ -166,7 +92,6 @@ export function PortfolioEnvProvider({ children }: { children: React.ReactNode }
         setTweaksOpen,
         glassTuning,
         setGlassTuning,
-        currentTheme,
       }}
     >
       {children}

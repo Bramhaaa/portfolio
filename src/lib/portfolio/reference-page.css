@@ -1,0 +1,489 @@
+/* Shared page chrome: liquid glass, animal choices, chat composer, tweak panel. */
+
+:root {
+  --bg: #f6f3ec;
+  --text: #1b1f30;
+  --text-soft: rgba(27, 31, 48, 0.72);
+  --muted: rgba(27, 31, 48, 0.42);
+  --tint-a: 0.34;
+  --tint-b: 0.08;
+  --glass-edge: rgba(255, 255, 255, 0.8);
+  --glass-rim: rgba(255, 255, 255, 0.95);
+  --glass-rim-low: rgba(255, 255, 255, 0.35);
+  --glass-glow: rgba(255, 255, 255, 0.35);
+  --glass-sheen: rgba(255, 255, 255, 0.35);
+  --glass-shadow: 0 12px 40px rgba(28, 40, 96, 0.14), 0 2px 8px rgba(28, 40, 96, 0.08);
+  --chip: rgba(255, 255, 255, 0.4);
+  --chip-hover: rgba(255, 255, 255, 0.7);
+  --chip-edge: rgba(27, 31, 48, 0.1);
+  --accent: #2a5fe6;
+  --accent-soft: rgba(42, 95, 230, 0.12);
+  --accent-edge: rgba(42, 95, 230, 0.35);
+  --thumb: rgba(255, 255, 255, 0.85);
+  --focus: rgba(42, 95, 230, 0.28);
+  color-scheme: light;
+}
+[data-theme="dark"] {
+  --bg: #06070c;
+  --text: #e8ebf7;
+  --text-soft: rgba(232, 235, 247, 0.72);
+  --muted: rgba(232, 235, 247, 0.4);
+  --tint-a: 0.1;
+  --tint-b: 0.03;
+  /* Edges scale with --edge (the Tweaks panel's Edge slider). */
+  --glass-edge: rgba(255, 255, 255, calc(0.14 * var(--edge, 1)));
+  --glass-rim: rgba(255, 255, 255, calc(0.32 * var(--edge, 1)));
+  --glass-rim-low: rgba(255, 255, 255, calc(0.08 * var(--edge, 1)));
+  --glass-glow: rgba(140, 170, 255, 0.07);
+  --glass-sheen: rgba(255, 255, 255, 0.1);
+  --glass-shadow: 0 16px 48px rgba(0, 0, 0, 0.55), 0 2px 8px rgba(0, 0, 0, 0.4);
+  --chip: rgba(255, 255, 255, 0.05);
+  --chip-hover: rgba(255, 255, 255, 0.12);
+  --chip-edge: rgba(255, 255, 255, 0.1);
+  --accent: #7aa2ff;
+  --accent-soft: rgba(122, 162, 255, 0.14);
+  --accent-edge: rgba(122, 162, 255, 0.4);
+  --thumb: rgba(255, 255, 255, 0.14);
+  --focus: rgba(122, 162, 255, 0.3);
+  color-scheme: dark;
+}
+
+html, body { margin: 0; height: 100%; background: var(--bg); overflow: hidden; }
+body { font-family: Geist, ui-sans-serif, system-ui, sans-serif; color: var(--text); -webkit-font-smoothing: antialiased; }
+canvas { display: block; width: 100vw; height: 100vh; font-family: "Geist Mono", ui-monospace, Menlo, monospace; touch-action: none; }
+button { font: inherit; color: inherit; }
+svg { display: block; }
+
+/* ── liquid glass ─────────────────────────────────────────────── */
+
+.glass {
+  position: fixed;
+  isolation: isolate;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, calc(var(--tint-a) * var(--tint, 1))),
+    rgba(255, 255, 255, calc(var(--tint-b) * var(--tint, 1)))
+  );
+  border: 1px solid var(--glass-edge);
+  box-shadow:
+    inset 1px 1px 0 var(--glass-rim),
+    inset -1px -1px 0 var(--glass-rim-low),
+    inset 0 0 24px var(--glass-glow),
+    var(--glass-shadow);
+  -webkit-backdrop-filter: blur(var(--blur, 6px)) saturate(180%);
+  backdrop-filter: blur(var(--blur, 6px)) saturate(180%);
+  transition: background 0.4s, border-color 0.4s, box-shadow 0.4s;
+}
+/* Refract what's behind the glass, so the butterflies and grid bend at the edges. */
+.liquid .glass { backdrop-filter: url(#liquid-glass) blur(var(--blur, 6px)) saturate(180%); }
+/* Specular sheen across the top of the pane. */
+.glass::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  background: linear-gradient(180deg, var(--glass-sheen), transparent 48%);
+  pointer-events: none;
+}
+
+/* ── top bar: the animal choices ─────────────────────────────── */
+
+.top-bar {
+  position: fixed;
+  /* Above the greeting and composer. */
+  z-index: 30;
+  top: 18px;
+  left: 50%;
+  translate: -50% 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.top-bar .glass { position: relative; }
+
+/* Animal choices: every animal in one glass row, a thumb sliding under the current one. */
+.choices {
+  display: flex;
+  gap: 2px;
+  max-width: max(240px, calc(100vw - 300px));
+  padding: 4px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  border-radius: 999px;
+  --blur: 5px;
+}
+.choices::-webkit-scrollbar { display: none; }
+.choices button {
+  position: relative;
+  z-index: 1;
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  height: 32px;
+  padding: 0 13px 0 11px;
+  border: 0;
+  border-radius: 999px;
+  background: none;
+  white-space: nowrap;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--muted);
+  cursor: pointer;
+  transition: color 0.3s;
+}
+.choices button:hover { color: var(--text-soft); }
+.choices button[aria-checked="true"] { color: var(--text); }
+.choices button:focus-visible { outline: 2px solid var(--focus); outline-offset: -2px; }
+.choices .thumb {
+  position: absolute;
+  top: 4px;
+  bottom: 4px;
+  left: 0;
+  border-radius: 999px;
+  background: var(--thumb);
+  box-shadow: inset 0 1px 0 var(--glass-rim), 0 2px 8px rgba(0, 0, 0, 0.12);
+  transition: translate 0.35s cubic-bezier(0.3, 1.3, 0.5, 1), width 0.35s cubic-bezier(0.3, 1.3, 0.5, 1);
+}
+.choices .dot {
+  flex: none;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, color-mix(in srgb, var(--swatch) 50%, white), var(--swatch) 70%);
+}
+
+/* ── logo + chat composer (Dia's AI input layout, in liquid glass) ── */
+
+/* Shrink-wraps the composer so it stays dead centre; the logo and greeting hang above it. */
+.stage {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  translate: -50% -50%;
+}
+.masthead {
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  translate: -50% 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 28px;
+  pointer-events: none;
+}
+/*
+ * Dia's dome as glass: whatever swims behind it blurs (and, in Chromium, refracts) through, cut to
+ * the logo's exact shape by using the logo itself as the mask, with its brushed texture laid over
+ * at partial strength.
+ */
+.logo {
+  --logo-texture: 0.62;
+  position: relative;
+  width: 76px;
+  aspect-ratio: 159 / 129;
+  -webkit-mask: url(/dia-logo.png) center / contain no-repeat;
+  mask: url(/dia-logo.png) center / contain no-repeat;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.02));
+  -webkit-backdrop-filter: blur(6px) saturate(160%);
+  backdrop-filter: blur(6px) saturate(160%);
+}
+.liquid .logo { backdrop-filter: url(#liquid-glass) blur(6px) saturate(160%); }
+.logo::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: url(/dia-logo.png) center / contain no-repeat;
+  opacity: var(--logo-texture);
+}
+.greeting {
+  margin: 0;
+  white-space: nowrap;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", Geist, system-ui, sans-serif;
+  font-size: clamp(24px, 5vw, 32px);
+  font-weight: 500;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  color: #e8e8e8;
+  /* A halo in the background colour keeps it legible over passing animals. */
+  text-shadow: 0 0 6px var(--bg), 0 0 24px var(--bg);
+}
+
+/* Liquid glass (see .glass), with Dia's layout inside. */
+.composer {
+  /* A softer top highlight than the other glass: the rim line and the sheen fading down from it. */
+  --glass-rim: rgba(255, 255, 255, calc(0.14 * var(--edge, 1)));
+  --glass-sheen: rgba(255, 255, 255, 0.04);
+  --dia-text: #ececec;
+  --dia-muted: #8d8d8d;
+  position: relative;
+  width: min(720px, calc(100vw - 32px));
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  margin: 0;
+  padding: 18px 12px 12px 18px;
+  border-radius: 24px;
+  --blur: 7px;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", Geist, system-ui, sans-serif;
+}
+/* Focused: a faint blue edge and glow, scaled by --edge like the borders. */
+.composer:focus-within {
+  border-color: rgba(122, 162, 255, calc(0.3 * var(--edge, 1)));
+  box-shadow:
+    inset 1px 1px 0 var(--glass-rim),
+    inset -1px -1px 0 var(--glass-rim-low),
+    inset 0 0 24px var(--glass-glow),
+    0 0 0 3px rgba(122, 162, 255, calc(0.12 * var(--edge, 1))),
+    var(--glass-shadow);
+}
+.composer-field { display: flex; align-items: flex-start; gap: 10px; }
+.composer-search { flex: none; margin-top: 4px; color: var(--dia-muted); }
+.composer textarea {
+  flex: 1;
+  display: block;
+  min-height: 27px;
+  max-height: 200px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  outline: none;
+  resize: none;
+  overflow-y: hidden;
+  background: none;
+  font-family: inherit;
+  font-size: 17px;
+  font-weight: 400;
+  line-height: 1.55;
+  color: var(--dia-text);
+  caret-color: var(--dia-text);
+}
+.composer textarea::placeholder { color: var(--dia-muted); }
+.composer-bar { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.tools { display: flex; align-items: center; gap: 10px; }
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  height: 34px;
+  padding: 0 14px 0 11px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 999px;
+  background: none;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 400;
+  color: #c4c4c4;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+.pill:hover { background: rgba(255, 255, 255, 0.05); color: var(--dia-text); }
+.icon-btn {
+  width: 34px;
+  height: 34px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: none;
+  color: var(--dia-muted);
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+.icon-btn:hover { background: rgba(255, 255, 255, 0.06); color: var(--dia-text); }
+.pill:focus-visible, .icon-btn:focus-visible, .send:focus-visible { outline: 2px solid rgba(255, 255, 255, 0.35); outline-offset: 2px; }
+.send {
+  width: 34px;
+  height: 34px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: #3a3a3a;
+  color: #e6e6e6;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s, transform 0.15s;
+}
+.send:hover:not(:disabled) { background: #f2f2f2; color: #1c1c1c; }
+.send:disabled { background: #333; color: #7c7c7c; cursor: default; }
+
+/* ── tweak panel ──────────────────────────────────────────────── */
+
+.tweaks {
+  top: 16px;
+  right: 16px;
+  z-index: 10;
+  width: 288px;
+  max-height: calc(100vh - 32px);
+  display: flex;
+  flex-direction: column;
+  border-radius: 20px;
+  font-size: 12px;
+  --blur: 18px;
+  --tint-a: 0.62;
+  --tint-b: 0.48;
+}
+[data-theme="dark"] .tweaks { --tint-a: 0.1; --tint-b: 0.06; }
+[data-theme="dark"] .tweaks, [data-theme="dark"] .tweaks-open { background-color: rgba(10, 12, 20, 0.55); }
+/* Keep the panel readable: frosted, no refraction. */
+.liquid .tweaks { backdrop-filter: blur(var(--blur)) saturate(180%); }
+.tweaks[hidden], .tweaks-open[hidden] { display: none; }
+.tweaks-head { display: flex; align-items: center; gap: 6px; padding: 12px 10px 10px 16px; border-bottom: 1px solid var(--chip-edge); }
+.tweaks-head h2 { flex: 1; margin: 0; font-size: 13px; font-weight: 500; }
+.tweaks-action, .tweaks-close {
+  height: 26px;
+  border: 1px solid var(--chip-edge);
+  border-radius: 999px;
+  background: var(--chip);
+  color: var(--text-soft);
+  cursor: pointer;
+  font-size: 12px;
+}
+.tweaks-action { padding: 0 10px; }
+/* Reset, armed: one more click resets everything. */
+.tweaks-action.confirm { color: #ff9a9a; background: rgba(255, 90, 90, 0.14); border-color: rgba(255, 120, 120, 0.45); }
+.tweaks-action.confirm:hover { color: #ffb4b4; background: rgba(255, 90, 90, 0.22); }
+.tweaks-close { width: 26px; padding: 0; display: grid; place-items: center; }
+.tweaks-action:hover, .tweaks-close:hover { background: var(--chip-hover); color: var(--text); }
+.tweaks-body { overflow-y: auto; padding: 4px 16px 14px; overscroll-behavior: contain; }
+.tweaks-group h3 {
+  margin: 14px 0 6px;
+  font: 600 10px/1 "Geist Mono", ui-monospace, monospace;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.tweaks-row {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  column-gap: 8px;
+  padding: 4px 0;
+  color: var(--text-soft);
+}
+.tweaks-row.off { opacity: 0.4; }
+.tweaks-label { cursor: default; user-select: none; }
+/* The tooltip beside the panel, explaining the hovered setting. */
+.tweaks-tip {
+  position: fixed;
+  z-index: 40;
+  max-width: 240px;
+  padding: 9px 11px;
+  border: 1px solid var(--glass-edge);
+  border-radius: 12px;
+  background: rgba(14, 16, 26, 0.92);
+  box-shadow: var(--glass-shadow);
+  font-size: 12px;
+  line-height: 1.45;
+  color: var(--text);
+  pointer-events: none;
+}
+.tweaks-tip[hidden] { display: none; }
+.tweaks-tip small { display: block; margin-top: 4px; font-size: 11px; color: var(--muted); }
+.tweaks-value { font: 600 11px "Geist Mono", ui-monospace, monospace; color: var(--text); }
+.tweaks-row input[type="range"] { grid-column: 1 / -1; }
+.tweaks input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 18px;
+  margin: 2px 0 0;
+  background: transparent;
+  cursor: pointer;
+}
+.tweaks input[type="range"]:disabled { cursor: default; }
+.tweaks input[type="range"]::-webkit-slider-runnable-track {
+  height: 4px;
+  border-radius: 2px;
+  background: linear-gradient(to right, var(--accent) var(--fill, 50%), var(--chip-edge) var(--fill, 50%));
+}
+.tweaks input[type="range"]::-moz-range-track { height: 4px; border-radius: 2px; background: var(--chip-edge); }
+.tweaks input[type="range"]::-moz-range-progress { height: 4px; border-radius: 2px; background: var(--accent); }
+.tweaks input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 14px;
+  height: 14px;
+  margin-top: -5px;
+  border-radius: 50%;
+  background: #fff;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+}
+.tweaks input[type="range"]::-moz-range-thumb {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #fff;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+}
+.tweaks input:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; border-radius: 4px; }
+.tweaks input[type="checkbox"] {
+  -webkit-appearance: none;
+  appearance: none;
+  position: relative;
+  width: 30px;
+  height: 18px;
+  margin: 0;
+  border-radius: 999px;
+  background: var(--chip-edge);
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.tweaks input[type="checkbox"]::after {
+  content: "";
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
+  transition: translate 0.2s;
+}
+.tweaks input[type="checkbox"]:checked { background: var(--accent); }
+.tweaks input[type="checkbox"]:checked::after { translate: 12px 0; }
+.tweaks-open {
+  top: 16px;
+  right: 16px;
+  z-index: 10;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 34px;
+  padding: 0 14px 0 12px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-soft);
+  cursor: pointer;
+  --blur: 10px;
+}
+.liquid .tweaks-open { backdrop-filter: blur(var(--blur)) saturate(180%); }
+.tweaks-open:hover { color: var(--text); }
+
+
+@media (max-width: 520px) {
+  .pill span { display: none; }
+  .pill { padding: 0 9px; }
+}
+/*
+ * Phones: the animal bar gets the whole top edge (scrolling sideways if it must), so the Tweaks
+ * button moves to the bottom right, and the panel opens as a sheet that fits the screen.
+ */
+@media (max-width: 720px) {
+  .top-bar { top: max(12px, env(safe-area-inset-top)); left: 12px; right: 12px; translate: none; justify-content: center; }
+  .choices { max-width: 100%; }
+  .tweaks-open { top: auto; bottom: max(12px, env(safe-area-inset-bottom)); right: 12px; }
+  .tweaks { top: auto; bottom: 12px; left: 12px; right: 12px; width: auto; max-height: 70vh; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .glass, .choices .thumb, .choices button, .send, .pill, .icon-btn { transition: none; }
+}

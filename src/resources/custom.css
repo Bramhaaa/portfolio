@@ -1,136 +1,192 @@
 /* ===================================================
    Design System Tokens — Bramha Bajannavar Portfolio
-   Neo-Brutalist × Into the Spider-Verse System (Phase 3)
-   Accent: Electric Cyan (#00D4FF)
+   Liquid Glass & ASCII Animals (Official design.md Specification)
    =================================================== */
 
-@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700;800&display=swap');
-
 :root {
-  /* ── Typography ─────────────────────────── */
-  --font-condensed: 'Bebas Neue', sans-serif;
-  --font-display:   'Bebas Neue', sans-serif;
-  --font-body:      'Geist', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  /* ── Typography (design.md §3.4: Pure Geist & Geist Mono) ────────── */
+  --font-condensed: var(--font-heading), 'Geist', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-display:   var(--font-heading), 'Geist', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-body:      var(--font-body), 'Geist', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-code:      var(--font-code), 'Geist Mono', ui-monospace, Menlo, monospace;
 
-  /* ── Color Palette ──────────────────────── */
-  --ds-bg:           #0c0c0c;
-  --ds-surface:      #121212;
-  --ds-surface-2:    #181818;
-  --ds-border:       #242424;
-  --ds-border-strong:#363636;
-  --ds-border-hover: #00D4FF;
-  --ds-ink:          #f5f5f0;
-  --ds-ink-2:        #a0a0a0;
-  --ds-ink-3:        #666666;
-  --ds-accent:       #00D4FF;
-  --ds-accent-2:     #38E1FF;
-  --ds-accent-glow:  rgba(0, 212, 255, 0.22);
-  --ds-live:         #00FF88;
+  /* ── Reference Default Tokens (All White Text & Cyan Accent) ─── */
+  --bg: #06070c;
+  --text: #ffffff;
+  --text-soft: #ffffff;
+  --muted: rgba(255, 255, 255, 0.85);
 
-  /* ── Neo-Brutalist Radii: Raw & Sharp ───── */
-  --ds-r-chip:  0px;
-  --ds-r-btn:   0px;
-  --ds-r-card:  0px;
+  /* Darker, atmospheric liquid glass tint */
+  --tint-a: 0.22;
+  --tint-b: 0.12;
+
+  /* Edges and specular rim highlights */
+  --glass-edge: rgba(255, 255, 255, calc(0.12 * var(--edge, 1)));
+  --glass-rim: rgba(255, 255, 255, calc(0.24 * var(--edge, 1)));
+  --glass-rim-low: rgba(255, 255, 255, calc(0.06 * var(--edge, 1)));
+  --glass-glow: rgba(0, 212, 255, 0.08);
+  --glass-sheen: rgba(255, 255, 255, 0.08);
+  --glass-shadow: 0 16px 48px rgba(0, 0, 0, 0.65), 0 2px 8px rgba(0, 0, 0, 0.5);
+
+  --chip: rgba(255, 255, 255, 0.05);
+  --chip-hover: rgba(255, 255, 255, 0.1);
+  --chip-edge: rgba(255, 255, 255, 0.08);
+
+  --accent: #00d4ff;
+  --accent-soft: rgba(0, 212, 255, 0.14);
+  --accent-edge: rgba(0, 212, 255, 0.45);
+  --thumb: rgba(255, 255, 255, 0.14);
+  --focus: rgba(0, 212, 255, 0.35);
+
+  /* ── Reference Geometry & Radii (design.md §3.6) ─────────────────── */
+  --ds-r-chip:  999px;
+  --ds-r-btn:   999px;
+  --ds-r-card:  24px;
   --ds-r-pill:  999px;
 
-  /* ── Neo-Brutalist Shadows ──────────────── */
-  --ds-shadow-sm: 2px 2px 0px var(--ds-accent);
-  --ds-shadow-md: 4px 4px 0px var(--ds-accent);
-  --ds-shadow-lg: 6px 6px 0px var(--ds-accent);
+  /* ── Once UI Remaps ──────────────────────────────────────────────── */
+  --ds-bg:            var(--bg);
+  --ds-surface:       rgba(10, 12, 18, 0.75);
+  --ds-surface-2:     rgba(14, 18, 26, 0.85);
+  --ds-border:        var(--glass-edge);
+  --ds-border-strong: var(--glass-rim);
+  --ds-border-hover:  var(--accent);
+  --ds-ink:           #ffffff;
+  --ds-ink-2:         #ffffff;
+  --ds-ink-3:         rgba(255, 255, 255, 0.85);
+  --ds-accent:        var(--accent);
+  --ds-accent-2:      var(--accent);
+  --ds-accent-glow:   var(--accent-soft);
+  --ds-live:          #00ff88;
 
-  /* ── Motion ─────────────────────────────── */
+  --page-background:              transparent;
+  --surface-background:           rgba(10, 12, 18, 0.7);
+  --surface-background-hover:     rgba(14, 18, 26, 0.85);
+  --surface-border:               var(--glass-edge);
+  --neutral-border-medium:        var(--glass-edge);
+  --neutral-border-strong:        var(--glass-rim);
+  --neutral-alpha-weak:           rgba(255, 255, 255, 0.04);
+  --neutral-alpha-medium:         rgba(255, 255, 255, 0.07);
+  --neutral-on-background-strong: #ffffff;
+  --neutral-on-background-medium: #ffffff;
+  --neutral-on-background-weak:   rgba(255, 255, 255, 0.85);
+  --brand-on-background-weak:     #ffffff;
+  --brand-solid-medium:           var(--accent);
+  --brand-alpha-medium:           var(--accent-soft);
+  --brand-alpha-weak:             rgba(0, 212, 255, 0.08);
+  --accent-background-strong:     var(--accent);
+  --accent-on-background-weak:    #ffffff;
+  --radius-m:                     var(--ds-r-card);
+  --radius-s:                     var(--ds-r-btn);
+  --radius-xs:                    var(--ds-r-chip);
+
   --ds-dur-1: 120ms;
   --ds-dur-2: 200ms;
   --ds-dur-3: 360ms;
   --ds-ease:  cubic-bezier(.2, .8, .2, 1);
-
-  /* ── Once UI Remaps ─────────────────────── */
-  --page-background:                  var(--ds-bg);
-  --surface-background:               var(--ds-surface);
-  --surface-background-hover:         var(--ds-surface-2);
-  --surface-border:                   var(--ds-border);
-  --neutral-border-medium:            var(--ds-border);
-  --neutral-border-strong:            var(--ds-border-strong);
-  --neutral-alpha-weak:               rgba(255, 255, 255, 0.05);
-  --neutral-alpha-medium:             rgba(255, 255, 255, 0.08);
-  --neutral-on-background-strong:     var(--ds-ink);
-  --neutral-on-background-medium:     var(--ds-ink-2);
-  --neutral-on-background-weak:       var(--ds-ink-3);
-  --brand-on-background-weak:         var(--ds-accent);
-  --brand-solid-medium:               var(--ds-accent);
-  --brand-alpha-medium:               rgba(0, 212, 255, 0.15);
-  --brand-alpha-weak:                 rgba(0, 212, 255, 0.07);
-  --accent-background-strong:         var(--ds-accent);
-  --accent-on-background-weak:        var(--ds-accent);
-  --radius-m:                         var(--ds-r-card);
-  --radius-s:                         var(--ds-r-btn);
-  --radius-xs:                        var(--ds-r-chip);
+  color-scheme: dark;
 }
 
-/* Page Background: Spider-Verse Halftone Double-Dot Grid */
-html,
-body,
 [data-theme="dark"],
-[data-theme="light"] {
-  background-color: #0c0c0c !important;
-  color: #f5f5f0 !important;
-  background-image:
-    radial-gradient(circle, rgba(0, 212, 255, 0.08) 1.5px, transparent 1.5px),
-    radial-gradient(circle, rgba(255, 255, 255, 0.04) 1px, transparent 1px) !important;
-  background-size: 32px 32px, 16px 16px !important;
-  background-position: 0 0, 8px 8px !important;
-  background-attachment: fixed !important;
+[data-theme="light"],
+html,
+body {
+  background-color: var(--bg) !important;
+  color: var(--text) !important;
+  color-scheme: dark !important;
+  font-family: var(--font-body), Geist, -apple-system, BlinkMacSystemFont, sans-serif !important;
+  -webkit-font-smoothing: antialiased !important;
+  margin: 0;
+  padding: 0;
+  background-image: none !important;
 }
 
-/* Typography Helpers */
+canvas {
+  font-family: var(--font-code), "Geist Mono", ui-monospace, Menlo, monospace !important;
+}
+
+/* ── Refined Darker Liquid Glass Material ─────────────────────────── */
+.glass {
+  position: relative;
+  isolation: isolate;
+  background: linear-gradient(
+    135deg,
+    rgba(15, 19, 30, calc(0.90 * var(--tint, 1))),
+    rgba(8, 11, 18, calc(0.82 * var(--tint, 1)))
+  ) !important;
+  border: 1px solid var(--glass-edge) !important;
+  box-shadow:
+    inset 1px 1px 0 var(--glass-rim),
+    inset -1px -1px 0 var(--glass-rim-low),
+    inset 0 0 24px var(--glass-glow),
+    var(--glass-shadow) !important;
+  -webkit-backdrop-filter: blur(var(--blur, 8px)) saturate(180%) !important;
+  backdrop-filter: blur(var(--blur, 8px)) saturate(180%) !important;
+  transition: background 0.4s, border-color 0.4s, box-shadow 0.4s !important;
+}
+
+/* Chromium SVG liquid-glass refraction map filter */
+.liquid .glass {
+  backdrop-filter: url(#liquid-glass) blur(var(--blur, 8px)) saturate(180%) !important;
+  -webkit-backdrop-filter: url(#liquid-glass) blur(var(--blur, 8px)) saturate(180%) !important;
+}
+
+/* Specular Sheen across top half of glass */
+.glass::after {
+  content: "" !important;
+  position: absolute !important;
+  inset: 0 !important;
+  z-index: -1 !important;
+  border-radius: inherit !important;
+  background: linear-gradient(180deg, var(--glass-sheen), transparent 48%) !important;
+  pointer-events: none !important;
+}
+
+/* ── Typography Overrides: Pure Geist ────────────────────────────── */
 .font-condensed {
-  font-family: var(--font-condensed) !important;
+  font-family: var(--font-heading), 'Geist', -apple-system, sans-serif !important;
 }
 
-/* Buttons: Neo-Brutalist Sharp Rectangles with Offset Shadows */
+/* Buttons: Soft rounded glass pills */
 button[data-variant="primary"],
 a[data-variant="primary"] {
-  background: var(--ds-accent) !important;
-  color: #0c0c0c !important;
-  border: 2px solid var(--ds-accent) !important;
-  border-radius: 0px !important;
-  font-weight: 700 !important;
-  letter-spacing: 0.04em !important;
-  text-transform: uppercase !important;
-  box-shadow: 4px 4px 0px #ffffff !important;
+  background: var(--accent) !important;
+  color: #06070c !important;
+  border: 1px solid var(--accent) !important;
+  border-radius: 999px !important;
+  font-family: var(--font-body), sans-serif !important;
+  font-weight: 600 !important;
+  font-size: 14px !important;
+  letter-spacing: -0.01em !important;
+  box-shadow: 0 4px 16px var(--accent-soft) !important;
   transition: transform var(--ds-dur-2) var(--ds-ease), box-shadow var(--ds-dur-2) var(--ds-ease) !important;
 }
 
 button[data-variant="primary"]:hover,
 a[data-variant="primary"]:hover {
-  transform: translate(-2px, -2px) !important;
-  box-shadow: 6px 6px 0px #ffffff !important;
+  transform: translateY(-1px) !important;
+  box-shadow: 0 6px 20px var(--accent-edge) !important;
 }
 
 button[data-variant="secondary"],
 a[data-variant="secondary"] {
-  background: #121212 !important;
-  border: 2px solid var(--ds-border-strong) !important;
-  color: var(--ds-ink) !important;
-  border-radius: 0px !important;
-  font-weight: 600 !important;
-  box-shadow: 4px 4px 0px var(--ds-border) !important;
-  transition: border-color var(--ds-dur-2) var(--ds-ease), transform var(--ds-dur-2) var(--ds-ease), box-shadow var(--ds-dur-2) var(--ds-ease), color var(--ds-dur-2) var(--ds-ease) !important;
+  background: var(--chip) !important;
+  border: 1px solid var(--chip-edge) !important;
+  color: var(--text) !important;
+  border-radius: 999px !important;
+  font-family: var(--font-body), sans-serif !important;
+  font-weight: 500 !important;
+  font-size: 14px !important;
+  backdrop-filter: blur(6px) !important;
+  -webkit-backdrop-filter: blur(6px) !important;
+  box-shadow: inset 1px 1px 0 rgba(255, 255, 255, 0.12) !important;
+  transition: border-color var(--ds-dur-2) var(--ds-ease), transform var(--ds-dur-2) var(--ds-ease), color var(--ds-dur-2) var(--ds-ease) !important;
 }
 
 button[data-variant="secondary"]:hover,
 a[data-variant="secondary"]:hover {
-  border-color: var(--ds-accent) !important;
+  border-color: var(--accent-edge) !important;
   color: #ffffff !important;
-  transform: translate(-2px, -2px) !important;
-  box-shadow: 6px 6px 0px var(--ds-accent) !important;
-}
-
-/* Reduced Motion */
-@media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-  }
+  background: var(--chip-hover) !important;
+  transform: translateY(-1px) !important;
 }

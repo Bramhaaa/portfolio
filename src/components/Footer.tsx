@@ -33,11 +33,11 @@ export const Footer = () => {
           style={{
             fontFamily: "var(--font-code)",
             fontSize: "12px",
-            color: "var(--ds-ink-3)",
+            color: "#ffffff",
           }}
         >
           <span>© {currentYear} /</span>
-          <span style={{ padding: "0 6px", color: "var(--ds-ink-2)" }}>{person.name}</span>
+          <span style={{ padding: "0 6px", color: "#ffffff" }}>{person.name}</span>
         </Text>
         <Row gap="12">
           {social.map(
@@ -50,7 +50,7 @@ export const Footer = () => {
                   tooltip={item.name}
                   size="s"
                   variant="ghost"
-                  style={{ color: "var(--ds-ink-2)" }}
+                  style={{ color: "#ffffff" }}
                 />
               ),
           )}

@@ -1,42 +1,84 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { person } from "@/resources";
+import { person, social } from "@/resources";
 import styles from "./Header.module.scss";
 
 export const Header = () => {
-  const pathname = usePathname() ?? "";
+  const githubLink = social.find((s) => s.name === "GitHub")?.link || "https://github.com/bramhaaa";
+  const linkedinLink = social.find((s) => s.name === "LinkedIn")?.link || "https://www.linkedin.com/in/bramhabajannavar";
+  const emailLink = `mailto:${person.email}`;
 
   return (
     <header className={styles.topBar}>
       <div className={styles.inner}>
-        {/* Left: Accent Initial Square + Name */}
+        {/* Accent Initial Badge + Name */}
         <Link href="/" className={styles.leftGroup}>
           <div className={styles.logoSquare}>BB</div>
           <span className={styles.brandName}>{person.name}</span>
         </Link>
 
-        {/* Right: Nav Links + Status Badge */}
-        <div className={styles.rightGroup}>
-          <nav className={styles.navLinks}>
-            <Link
-              href="/about"
-              className={`${styles.navLink} ${pathname === "/about" ? styles.activeLink : ""}`}
-            >
-              About
-            </Link>
-          </nav>
-
-          {/* Status Badge */}
+        {/* Right Group: Social Links & Quick Resume */}
+        <nav className={styles.navLinks} aria-label="Quick links">
           <a
-            href={`mailto:${person.email}`}
-            className={styles.statusBadge}
+            href={githubLink}
+            target="_blank"
+            rel="noopener noreferrer"
+            className={styles.iconLink}
+            title="GitHub"
+            aria-label="GitHub profile"
           >
-            <span className={styles.greenDot} />
-            <span>Open to opportunities</span>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4" />
+              <path d="M9 18c-4.51 2-5-2-7-2" />
+            </svg>
+            <span className={styles.linkLabel}>GitHub</span>
           </a>
-        </div>
+
+          <a
+            href={linkedinLink}
+            target="_blank"
+            rel="noopener noreferrer"
+            className={styles.iconLink}
+            title="LinkedIn"
+            aria-label="LinkedIn profile"
+          >
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
+              <rect x="2" y="9" width="4" height="12" />
+              <circle cx="4" cy="4" r="2" />
+            </svg>
+            <span className={styles.linkLabel}>LinkedIn</span>
+          </a>
+
+          <a
+            href={emailLink}
+            className={styles.iconLink}
+            title="Email"
+            aria-label="Send Email"
+          >
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <rect width="20" height="16" x="2" y="4" rx="2" />
+              <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
+            </svg>
+            <span className={styles.linkLabel}>Email</span>
+          </a>
+
+          <a
+            href="/resume.pdf"
+            target="_blank"
+            rel="noopener noreferrer"
+            className={styles.resumeBtn}
+            title="Download / View Resume"
+          >
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+              <polyline points="7 10 12 15 17 10" />
+              <line x1="12" y1="15" x2="12" y2="3" />
+            </svg>
+            <span className={styles.linkLabel}>Resume</span>
+          </a>
+        </nav>
       </div>
     </header>
   );

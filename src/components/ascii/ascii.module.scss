@@ -1,0 +1,12 @@
+.background {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 0;
+  display: block;
+  font-family: var(--font-code), "Geist Mono", ui-monospace, Menlo, monospace;
+  touch-action: none;
+  pointer-events: auto;
+  user-select: none;
+}

@@ -3,6 +3,7 @@ import { Schema, Meta } from "@once-ui-system/core";
 import { home, about, person, baseURL } from "@/resources";
 import { Mailto, CodingStats, ResumeViewer } from "@/components";
 import { Projects } from "@/components/work/Projects";
+import { WorkExperienceSection, TechStackSection } from "@/components/about/AboutSection";
 import styles from "./page.module.scss";
 
 export async function generateMetadata() {
@@ -24,7 +25,7 @@ export default function Home() {
         path={home.path}
         title={home.title}
         description={home.description}
-        image={`/api/og/generate?title=${encodeURIComponent(home.title)}`}
+        image={`/images/og.png`}
         author={{
           name: person.name,
           url: `${baseURL}${about.path}`,
@@ -32,15 +33,14 @@ export default function Home() {
         }}
       />
 
-      {/* Hero Section — Decluttered, High-Impact Neo-Brutalist */}
+      {/* Hero Section */}
       <section className={styles.heroWrapper}>
-        {/* Giant Outlined Word behind everything (Spider-Verse street-art backdrop) */}
         <div className={styles.outlinedHeroWord}>DEVELOPER</div>
 
         <div className={styles.heroContent}>
           <div className={styles.nameBlock}>
-            <span className={styles.greetingText}>Hello, I'm</span>
-            <div className={styles.accentNameBox}>BRAMHA.</div>
+            <span className={styles.greetingText}>HELLO, I&apos;M</span>
+            <div className={styles.accentNameBox}>Bramha.</div>
           </div>
 
           <div className={styles.roleLine}>
@@ -51,12 +51,20 @@ export default function Home() {
           <p className={styles.introBio}>
             I build apps for <strong>Mac, Android, and the web</strong>, then engineer{" "}
             <strong>scalable backends and local-first AI systems</strong>. When the code is
-            done, I'm usually <strong>learning new architectures or solving algorithmic problems</strong>.
+            done, I&apos;m usually <strong>learning new architectures or solving algorithmic problems</strong>.
           </p>
 
           <div className={styles.ctaRow}>
             <a href="#work" className={styles.primaryCta}>
               See the work →
+            </a>
+            <a
+              href="/resume.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+              className={styles.resumeCta}
+            >
+              Resume ↗
             </a>
             <a href={`mailto:${person.email}`} className={styles.ghostCta}>
               Get in touch
@@ -73,7 +81,7 @@ export default function Home() {
 
           <div className={styles.statBox}>
             <span className={styles.statNum}>2+</span>
-            <span className={styles.statLabel}>Internships across Samsung & AI labs</span>
+            <span className={styles.statLabel}>Internships across Samsung &amp; AI labs</span>
           </div>
 
           <div className={styles.statBox}>
@@ -83,7 +91,22 @@ export default function Home() {
         </div>
       </section>
 
-      {/* On The Bench Section — Dedicated Clean Neo-Brutalist Grid */}
+      {/* 1. Work Experience Timeline (Immediate high-signal proof) */}
+      <WorkExperienceSection />
+
+      {/* 2. Projects Section (Flagship shipped software) */}
+      <section id="work" className={styles.sectionContainer}>
+        <div className={styles.sectionHeader}>
+          <div className={styles.sectionBadge}>PORTFOLIO</div>
+          <h2 className={styles.sectionTitle}>Things I&apos;ve shipped.</h2>
+          <p className={styles.sectionSubtitle}>
+            Native applications, developer tools, and scalable intelligent systems.
+          </p>
+        </div>
+        <Projects />
+      </section>
+
+      {/* 3. On The Bench Section (Active experiments & prototypes) */}
       <section className={styles.sectionContainer}>
         <div className={styles.sectionHeader}>
           <div className={styles.sectionBadge}>ACTIVE LABS</div>
@@ -112,7 +135,7 @@ export default function Home() {
 
           <div className={styles.benchCard}>
             <div className={styles.benchCardTag}>REAL-TIME AI</div>
-            <h3 className={styles.benchCardTitle}>Search & Chat Engine</h3>
+            <h3 className={styles.benchCardTitle}>Search &amp; Chat Engine</h3>
             <p className={styles.benchCardDesc}>
               FastAPI and WebSocket conversational search engine querying documents with low-latency streaming AI.
             </p>
@@ -120,30 +143,21 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Projects Section */}
-      <section id="work" className={styles.sectionContainer}>
-        <div className={styles.sectionHeader}>
-          <div className={styles.sectionBadge}>PORTFOLIO</div>
-          <h2 className={styles.sectionTitle}>Things I've shipped.</h2>
-          <p className={styles.sectionSubtitle}>
-            Native applications, developer tools, and scalable intelligent systems.
-          </p>
-        </div>
-        <Projects />
-      </section>
-
-      {/* Coding Stats Dashboard */}
-      <section id="stack" style={{ width: "100%" }}>
+      {/* 4. Coding Stats Dashboard (GitHub, LeetCode, GFG) */}
+      <section id="stats" style={{ width: "100%" }}>
         <CodingStats />
       </section>
 
-      {/* Resume Section */}
-      <section style={{ width: "100%" }}>
+      {/* 5. Tech Stack Section */}
+      <TechStackSection />
+
+      {/* 6. Resume Section (Interactive preview) */}
+      <section id="resume" style={{ width: "100%", marginBottom: "40px" }}>
         <ResumeViewer />
       </section>
 
-      {/* Contact Section */}
-      <section style={{ width: "100%" }}>
+      {/* 7. Contact Section */}
+      <section id="contact" style={{ width: "100%" }}>
         <Mailto />
       </section>
     </div>

@@ -15,41 +15,40 @@ export const Mailto: React.FC<React.ComponentProps<typeof Column>> = ({ ...flex 
       marginBottom="m"
       horizontal="center"
       align="center"
+      className="glass"
       style={{
-        maxWidth: "1280px",
+        maxWidth: "1120px",
         margin: "0 auto",
         position: "relative",
-        background: "#141414",
-        border: "2px solid var(--ds-border)",
-        borderRadius: "0px",
-        boxShadow: "6px 6px 0px #000000",
+        borderRadius: "24px",
+        padding: "48px 32px",
       }}
       {...flex}
     >
       <Column maxWidth="s" horizontal="center" align="center" gap="16">
-        <Heading
-          as="h2"
+        <h2
           style={{
-            fontFamily: "var(--font-condensed)",
-            fontSize: "clamp(36px, 5vw, 56px)",
-            letterSpacing: "0.02em",
-            textTransform: "uppercase",
-            lineHeight: 1.0,
-            color: "var(--ds-ink)",
+            fontFamily: "var(--font-body), 'Geist', sans-serif",
+            fontSize: "clamp(28px, 4vw, 42px)",
+            fontWeight: 600,
+            letterSpacing: "-0.03em",
+            lineHeight: 1.1,
+            color: "var(--text)",
             margin: 0,
             textAlign: "center",
           }}
         >
           Got something to build?
-        </Heading>
+        </h2>
         <Text
           wrap="balance"
           variant="body-default-m"
           style={{
-            color: "var(--ds-ink-2)",
+            color: "var(--text-soft)",
             textAlign: "center",
-            maxWidth: "46ch",
-            fontSize: "14px",
+            maxWidth: "48ch",
+            fontSize: "15px",
+            lineHeight: "1.6",
           }}
         >
           Have a project, role, or question? Send me a direct email or connect through LinkedIn.
@@ -60,7 +59,6 @@ export const Mailto: React.FC<React.ComponentProps<typeof Column>> = ({ ...flex 
             size="m"
             variant="primary"
             suffixIcon="arrowUpRight"
-            style={{ borderRadius: "var(--ds-r-btn)" }}
           >
             Send an email
           </Button>

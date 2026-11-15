@@ -350,7 +350,7 @@ export function CodingStats() {
               top: `${(hoveredPoint.y / svgHeight) * 100 - 45}%`,
             }}
           >
-            <Text variant="label-strong-s" style={{ color: "var(--accent)" }}>
+            <Text variant="label-strong-s" style={{ color: "#ffffff" }}>
               Rating: {hoveredPoint.rating}
             </Text>
             <Text
@@ -481,7 +481,7 @@ export function CodingStats() {
               top: `${(hoveredContrib.y / svgHeight) * 100 - 32}%`,
             }}
           >
-            <Text variant="label-strong-xs" style={{ color: "var(--accent)" }}>
+            <Text variant="label-strong-xs" style={{ color: "#ffffff" }}>
               {hoveredContrib.count} {hoveredContrib.count === 1 ? "contribution" : "contributions"}
             </Text>
             <Text
@@ -513,21 +513,20 @@ export function CodingStats() {
         >
           {/* Section Title */}
           <Column gap="8" align="center" fillWidth marginBottom="m">
-            <Heading
-              as="h2"
+            <h2
               style={{
-                fontFamily: "var(--font-condensed)",
-                fontSize: "clamp(36px, 5vw, 56px)",
-                letterSpacing: "0.02em",
-                textTransform: "uppercase",
-                lineHeight: 1.0,
-                color: "var(--ds-ink)",
+                fontFamily: "var(--font-body), 'Geist', sans-serif",
+                fontSize: "clamp(28px, 4vw, 42px)",
+                fontWeight: 600,
+                letterSpacing: "-0.03em",
+                lineHeight: 1.1,
+                color: "var(--text)",
                 margin: 0,
               }}
             >
               By the numbers.
-            </Heading>
-            <Text variant="body-default-m" style={{ color: "var(--text-secondary)", margin: 0, fontSize: "14px" }}>
+            </h2>
+            <Text variant="body-default-m" style={{ color: "var(--text-soft)", margin: 0, fontSize: "15px" }}>
               Real-time developer stats aggregated across coding platforms.
             </Text>
           </Column>

@@ -24,19 +24,21 @@
   --glass-edge: rgba(255, 255, 255, calc(0.12 * var(--edge, 1)));
   --glass-rim: rgba(255, 255, 255, calc(0.24 * var(--edge, 1)));
   --glass-rim-low: rgba(255, 255, 255, calc(0.06 * var(--edge, 1)));
-  --glass-glow: rgba(0, 212, 255, 0.08);
+  --glass-glow: rgba(255, 170, 0, 0.12);
   --glass-sheen: rgba(255, 255, 255, 0.08);
   --glass-shadow: 0 16px 48px rgba(0, 0, 0, 0.65), 0 2px 8px rgba(0, 0, 0, 0.5);
+  --glass-bg-start: rgba(26, 20, 10, 0.90);
+  --glass-bg-end: rgba(16, 11, 6, 0.82);
 
   --chip: rgba(255, 255, 255, 0.05);
   --chip-hover: rgba(255, 255, 255, 0.1);
   --chip-edge: rgba(255, 255, 255, 0.08);
 
-  --accent: #00d4ff;
-  --accent-soft: rgba(0, 212, 255, 0.14);
-  --accent-edge: rgba(0, 212, 255, 0.45);
+  --accent: #ffaa00;
+  --accent-soft: rgba(255, 170, 0, 0.14);
+  --accent-edge: rgba(255, 170, 0, 0.45);
   --thumb: rgba(255, 255, 255, 0.14);
-  --focus: rgba(0, 212, 255, 0.35);
+  --focus: rgba(255, 170, 0, 0.35);
 
   /* ── Reference Geometry & Radii (design.md §3.6) ─────────────────── */
   --ds-r-chip:  999px;

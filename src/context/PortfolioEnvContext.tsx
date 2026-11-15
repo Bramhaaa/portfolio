@@ -90,23 +90,23 @@ interface PortfolioEnvContextType {
 }
 
 const PortfolioEnvContext = createContext<PortfolioEnvContextType>({
-  selectedAnimal: "butterflies",
+  selectedAnimal: "koi",
   setSelectedAnimal: () => {},
   tweaksOpen: false,
   setTweaksOpen: () => {},
   glassTuning: DEFAULT_GLASS,
   setGlassTuning: () => {},
-  currentTheme: ANIMAL_THEMES.butterflies,
+  currentTheme: ANIMAL_THEMES.koi,
 });
 
 export function PortfolioEnvProvider({ children }: { children: React.ReactNode }) {
-  const [selectedAnimal, setSelectedAnimalState] = useState<AnimalKey>("butterflies");
+  const [selectedAnimal, setSelectedAnimalState] = useState<AnimalKey>("koi");
   const [tweaksOpen, setTweaksOpen] = useState<boolean>(false);
   const [glassTuning, setGlassTuningState] = useState<GlassTuning>(DEFAULT_GLASS);
   const [mounted, setMounted] = useState<boolean>(false);
 
   useEffect(() => {
-    const animal = getStoredAnimal("butterflies");
+    const animal = getStoredAnimal("koi");
     setSelectedAnimalState(animal);
     const glass = getStoredGlass();
     setGlassTuningState(glass);
@@ -131,7 +131,7 @@ export function PortfolioEnvProvider({ children }: { children: React.ReactNode }
   // Sync animal theme hue & glow custom properties to documentElement
   useEffect(() => {
     if (!mounted) return;
-    const theme = ANIMAL_THEMES[selectedAnimal] || ANIMAL_THEMES.butterflies;
+    const theme = ANIMAL_THEMES[selectedAnimal] || ANIMAL_THEMES.koi;
     const root = document.documentElement;
 
     root.style.setProperty("--accent", theme.accent);
@@ -155,7 +155,7 @@ export function PortfolioEnvProvider({ children }: { children: React.ReactNode }
     root.style.setProperty("--edge", `${glassTuning.edge}`);
   }, [glassTuning, mounted]);
 
-  const currentTheme = ANIMAL_THEMES[selectedAnimal] || ANIMAL_THEMES.butterflies;
+  const currentTheme = ANIMAL_THEMES[selectedAnimal] || ANIMAL_THEMES.koi;
 
   return (
     <PortfolioEnvContext.Provider

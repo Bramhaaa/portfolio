@@ -31,7 +31,7 @@ export const STORAGE_KEYS = {
   tweaksOpen: "bramha-portfolio:tweaks-open",
 } as const;
 
-export function getStoredAnimal(defaultAnimal: AnimalKey = "butterflies"): AnimalKey {
+export function getStoredAnimal(defaultAnimal: AnimalKey = "koi"): AnimalKey {
   if (typeof window === "undefined") return defaultAnimal;
   try {
     const urlParams = new URLSearchParams(window.location.search);

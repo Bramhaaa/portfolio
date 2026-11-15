@@ -111,18 +111,18 @@ canvas {
   isolation: isolate;
   background: linear-gradient(
     135deg,
-    rgba(15, 19, 30, calc(0.90 * var(--tint, 1))),
-    rgba(8, 11, 18, calc(0.82 * var(--tint, 1)))
+    var(--glass-bg-start, rgba(15, 19, 30, calc(0.90 * var(--tint, 1)))),
+    var(--glass-bg-end, rgba(8, 11, 18, calc(0.82 * var(--tint, 1))))
   ) !important;
   border: 1px solid var(--glass-edge) !important;
   box-shadow:
     inset 1px 1px 0 var(--glass-rim),
     inset -1px -1px 0 var(--glass-rim-low),
-    inset 0 0 24px var(--glass-glow),
+    inset 0 0 28px var(--glass-glow),
     var(--glass-shadow) !important;
   -webkit-backdrop-filter: blur(var(--blur, 8px)) saturate(180%) !important;
   backdrop-filter: blur(var(--blur, 8px)) saturate(180%) !important;
-  transition: background 0.4s, border-color 0.4s, box-shadow 0.4s !important;
+  transition: background 0.6s ease, border-color 0.6s ease, box-shadow 0.6s ease !important;
 }
 
 /* Chromium SVG liquid-glass refraction map filter */

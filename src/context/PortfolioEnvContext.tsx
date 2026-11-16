@@ -37,7 +37,7 @@ interface PortfolioEnvContextType {
 }
 
 const PortfolioEnvContext = createContext<PortfolioEnvContextType>({
-  selectedAnimal: "koi",
+  selectedAnimal: "butterflies",
   setSelectedAnimal: () => {},
   tweaksOpen: false,
   setTweaksOpen: () => {},
@@ -46,13 +46,13 @@ const PortfolioEnvContext = createContext<PortfolioEnvContextType>({
 });
 
 export function PortfolioEnvProvider({ children }: { children: React.ReactNode }) {
-  const [selectedAnimal, setSelectedAnimalState] = useState<AnimalKey>("koi");
+  const [selectedAnimal, setSelectedAnimalState] = useState<AnimalKey>("butterflies");
   const [tweaksOpen, setTweaksOpen] = useState<boolean>(false);
   const [glassTuning, setGlassTuningState] = useState<GlassTuning>(DEFAULT_GLASS);
   const [mounted, setMounted] = useState<boolean>(false);
 
   useEffect(() => {
-    const animal = getStoredAnimal("koi");
+    const animal = getStoredAnimal("butterflies");
     setSelectedAnimalState(animal);
     const glass = getStoredGlass();
     setGlassTuningState(glass);

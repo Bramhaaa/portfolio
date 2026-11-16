@@ -152,12 +152,12 @@ export default function Home() {
       <TechStackSection />
 
       {/* 6. Resume Section (Interactive preview) */}
-      <section id="resume" style={{ width: "100%", marginBottom: "40px" }}>
+      <section id="resume" className={styles.sectionContainer} style={{ paddingTop: "32px", paddingBottom: "24px" }}>
         <ResumeViewer />
       </section>
 
       {/* 7. Contact Section */}
-      <section id="contact" style={{ width: "100%" }}>
+      <section id="contact" className={styles.sectionContainer} style={{ paddingTop: "24px", paddingBottom: "64px" }}>
         <Mailto />
       </section>
     </div>

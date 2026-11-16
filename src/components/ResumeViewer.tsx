@@ -11,16 +11,20 @@ export const ResumeViewer: React.FC = () => {
       fillWidth
       padding="xl"
       radius="l"
-      marginBottom="xl"
+      marginBottom="m"
       horizontal="center"
       align="center"
       className="glass"
       style={{
-        maxWidth: "1120px",
+        width: "100%",
+        maxWidth: "100%",
+        boxSizing: "border-box",
         margin: "0 auto",
         position: "relative",
         borderRadius: "24px",
         padding: "48px 32px",
+        borderTop: "1px solid var(--accent-edge)",
+        transition: "transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease",
       }}
     >
       <Column maxWidth="s" horizontal="center" align="center" gap="16">

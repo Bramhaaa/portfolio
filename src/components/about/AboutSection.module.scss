@@ -71,12 +71,25 @@
 
 .aboutPanel {
   composes: glass from global;
+  border-top: 1px solid var(--accent-edge) !important;
   padding: 32px 36px;
   border-radius: 24px;
   --blur: 6px;
   display: flex;
   flex-direction: column;
   gap: 20px;
+  transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+    border-color: var(--accent-edge) !important;
+    box-shadow:
+      inset 1px 1px 0 var(--glass-rim),
+      inset -1px -1px 0 var(--glass-rim-low),
+      inset 0 0 28px var(--glass-glow),
+      0 18px 48px rgba(0, 0, 0, 0.70),
+      0 0 24px var(--accent-soft) !important;
+  }
 
   @media (max-width: 680px) {
     padding: 24px;

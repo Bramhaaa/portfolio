@@ -40,16 +40,21 @@
   position: relative;
   z-index: 1;
   border-radius: 20px;
+  border-top: 1px solid var(--accent-edge) !important;
   padding: 24px;
   --blur: 10px;
-  transition:
-    transform var(--ds-dur-2) var(--ds-ease),
-    border-color var(--ds-dur-2) var(--ds-ease);
+  transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
   overflow: visible;
 
   &:hover {
     transform: translateY(-2px);
-    border-color: var(--ds-accent) !important;
+    border-color: var(--accent-edge) !important;
+    box-shadow:
+      inset 1px 1px 0 var(--glass-rim),
+      inset -1px -1px 0 var(--glass-rim-low),
+      inset 0 0 28px var(--glass-glow),
+      0 18px 48px rgba(0, 0, 0, 0.70),
+      0 0 24px var(--accent-soft) !important;
   }
 }
 
@@ -93,24 +98,28 @@
 }
 
 .platformBadge {
+  composes: glass from global;
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  padding: 6px 12px;
-  background: #181818;
-  border: 2px solid var(--border);
-  border-radius: 0px;
-  box-shadow: 2px 2px 0px #000000;
-  transition:
-    transform var(--ds-dur-1) var(--ds-ease),
-    box-shadow var(--ds-dur-1) var(--ds-ease),
-    border-color var(--ds-dur-1) var(--ds-ease);
-  text-decoration: none;
+  gap: 12px;
+  padding: 12px 18px;
+  background: rgba(255, 255, 255, 0.07) !important;
+  border: 1px solid rgba(255, 255, 255, 0.18) !important;
+  border-top: 1px solid var(--accent-edge) !important;
+  border-radius: 999px !important;
+  box-shadow: inset 1px 1px 0 rgba(255, 255, 255, 0.20), 0 2px 8px rgba(0, 0, 0, 0.3) !important;
+  backdrop-filter: blur(12px) saturate(180%) !important;
+  -webkit-backdrop-filter: blur(12px) saturate(180%) !important;
+  transition: transform 0.2s ease, background 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease !important;
+  text-decoration: none !important;
+  color: #ffffff !important;
 
   &:hover {
-    transform: translate(-1px, -1px);
-    border-color: var(--ds-accent);
-    box-shadow: 3px 3px 0px var(--ds-accent);
+    transform: translateY(-2px) !important;
+    background: rgba(255, 255, 255, 0.14) !important;
+    border-color: var(--accent-edge) !important;
+    box-shadow: inset 1px 1px 0 rgba(255, 255, 255, 0.30), 0 4px 18px rgba(0, 212, 255, 0.25) !important;
+    color: #ffffff !important;
   }
 }
 

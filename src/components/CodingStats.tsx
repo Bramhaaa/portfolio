@@ -509,7 +509,7 @@ export function CodingStats() {
           gap="xl"
           paddingX="l"
           marginBottom="40"
-          style={{ maxWidth: "1320px", margin: "0 auto" }}
+          style={{ maxWidth: "1120px", margin: "0 auto", padding: "0 24px", boxSizing: "border-box" }}
         >
           {/* Section Title */}
           <Column gap="8" align="center" fillWidth marginBottom="m">
@@ -1033,15 +1033,15 @@ export function CodingStats() {
                   <Row gap="8" vertical="center">
                     <Icon name="openLink" size="s" style={{ color: "var(--accent)" }} />
                     <Column>
-                      <Text variant="label-strong-m" style={{ color: "var(--text-primary)" }}>
+                      <Text variant="label-strong-m" style={{ color: "#ffffff" }}>
                         Codolio Portfolio
                       </Text>
-                      <Text variant="body-default-xs" style={{ color: "var(--text-muted)" }}>
+                      <Text variant="body-default-xs" style={{ color: "rgba(255, 255, 255, 0.85)" }}>
                         All-in-one developer track
                       </Text>
                     </Column>
                   </Row>
-                  <Icon name="arrowUpRight" size="s" style={{ color: "var(--text-muted)" }} />
+                  <Icon name="arrowUpRight" size="s" style={{ color: "#ffffff" }} />
                 </a>
               </Column>
             </Column>

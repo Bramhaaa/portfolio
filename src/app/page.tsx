@@ -56,7 +56,21 @@ export default function Home() {
 
           <div className={styles.ctaRow}>
             <a href="#work" className={styles.primaryCta}>
-              See the work →
+              <span>See the work</span>
+              <svg
+                width="14"
+                height="14"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                aria-hidden="true"
+              >
+                <line x1="5" y1="12" x2="19" y2="12" />
+                <polyline points="12 5 19 12 12 19" />
+              </svg>
             </a>
             <a
               href="/resume.pdf"
@@ -64,10 +78,24 @@ export default function Home() {
               rel="noopener noreferrer"
               className={styles.resumeCta}
             >
-              Resume ↗
+              <span>Resume</span>
+              <svg
+                width="13"
+                height="13"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                aria-hidden="true"
+              >
+                <line x1="7" y1="17" x2="17" y2="7" />
+                <polyline points="7 7 17 7 17 17" />
+              </svg>
             </a>
             <a href={`mailto:${person.email}`} className={styles.ghostCta}>
-              Get in touch
+              <span>Get in touch</span>
             </a>
           </div>
         </div>

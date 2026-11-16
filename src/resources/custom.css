@@ -111,7 +111,7 @@ canvas {
   font-family: var(--font-code), "Geist Mono", ui-monospace, Menlo, monospace !important;
 }
 
-/* ── Card Styling & Universal On The Bench Hover Effect ────────── */
+/* ── Liquid Glass Material ────────────────────────────────────────── */
 .glass {
   position: relative;
   isolation: isolate;
@@ -121,7 +121,6 @@ canvas {
     var(--glass-bg-end, rgba(8, 11, 18, calc(0.82 * var(--tint, 1))))
   ) !important;
   border: 1px solid var(--glass-edge) !important;
-  border-top: 1px solid var(--accent-edge) !important;
   box-shadow:
     inset 1px 1px 0 var(--glass-rim),
     inset -1px -1px 0 var(--glass-rim-low),
@@ -130,17 +129,6 @@ canvas {
   -webkit-backdrop-filter: blur(var(--blur, 8px)) saturate(180%) !important;
   backdrop-filter: blur(var(--blur, 8px)) saturate(180%) !important;
   transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease, background 0.6s ease !important;
-}
-
-.glass:hover {
-  transform: translateY(-2px) !important;
-  border-color: var(--accent-edge) !important;
-  box-shadow:
-    inset 1px 1px 0 var(--glass-rim),
-    inset -1px -1px 0 var(--glass-rim-low),
-    inset 0 0 28px var(--glass-glow),
-    0 18px 48px rgba(0, 0, 0, 0.70),
-    0 0 24px var(--accent-soft) !important;
 }
 
 /* Chromium SVG liquid-glass refraction map filter */
@@ -165,9 +153,7 @@ canvas {
   font-family: var(--font-heading), 'Geist', -apple-system, sans-serif !important;
 }
 
-/* ── Universal Button Uniformity (Matching Header Aesthetic) ─────── */
-button,
-a[role="button"],
+/* ── Once UI Action Buttons Uniformity (Matching Header Aesthetic) ── */
 button[data-variant="primary"],
 a[data-variant="primary"],
 button[data-variant="secondary"],
@@ -223,9 +209,7 @@ a[data-variant="secondary"] {
 }
 
 button[data-variant="secondary"]:hover,
-a[data-variant="secondary"]:hover,
-button:hover,
-a[role="button"]:hover {
+a[data-variant="secondary"]:hover {
   transform: translateY(-1px) !important;
   background: rgba(255, 255, 255, 0.14) !important;
   border-color: rgba(0, 212, 255, 0.45) !important;
@@ -233,13 +217,9 @@ a[role="button"]:hover {
   color: #ffffff !important;
 }
 
-/* Universal Button Icon and Label Consistency */
-button span,
-a[role="button"] span,
+/* Ensure icons and text inside Once UI buttons stay pure white */
 button[data-variant] span,
 a[data-variant] span,
-button svg,
-a[role="button"] svg,
 button[data-variant] svg,
 a[data-variant] svg {
   color: #ffffff !important;
@@ -247,8 +227,6 @@ a[data-variant] svg {
   transition: transform 0.2s ease, opacity 0.2s ease !important;
 }
 
-button:hover svg,
-a[role="button"]:hover svg,
 button[data-variant]:hover svg,
 a[data-variant]:hover svg {
   opacity: 1 !important;

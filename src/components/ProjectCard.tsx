@@ -27,14 +27,16 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
     <div className={styles.card}>
       {images?.length > 0 && (
         <div className={styles.imageFrame}>
-          <Carousel
-            aspectRatio="16 / 10"
-            sizes="(max-width: 960px) 100vw, 1200px"
-            items={images.map((image) => ({
-              slide: image,
-              alt: title,
-            }))}
-          />
+          <div className={styles.imageInner}>
+            <Carousel
+              aspectRatio="16 / 10"
+              sizes="(max-width: 960px) 100vw, 1200px"
+              items={images.map((image) => ({
+                slide: image,
+                alt: title,
+              }))}
+            />
+          </div>
         </div>
       )}
 

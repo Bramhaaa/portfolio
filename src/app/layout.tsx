@@ -162,6 +162,7 @@ export default async function RootLayout({
                 flexDirection: "column",
                 alignItems: "center",
                 width: "100%",
+                paddingTop: "56px",
               }}
             >
               <Header />

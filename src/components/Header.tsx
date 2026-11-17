@@ -9,11 +9,18 @@ export const Header = () => {
   const linkedinLink = social.find((s) => s.name === "LinkedIn")?.link || "https://www.linkedin.com/in/bramhabajannavar";
   const emailLink = `mailto:${person.email}`;
 
+  const handleLogoClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    if (typeof window !== "undefined" && window.location.pathname === "/") {
+      e.preventDefault();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+  };
+
   return (
     <header className={styles.topBar}>
       <div className={styles.inner}>
         {/* Accent Initial Badge + Name */}
-        <Link href="/" className={styles.leftGroup}>
+        <Link href="/" className={styles.leftGroup} onClick={handleLogoClick}>
           <div className={styles.logoSquare}>BB</div>
           <span className={styles.brandName}>{person.name}</span>
         </Link>
